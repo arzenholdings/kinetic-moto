@@ -18,18 +18,41 @@ const initialFormState: LeadFormState = {
 
 export function ContactForm() {
   const [formState, setFormState] = useState(initialFormState);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   function updateField(field: keyof LeadFormState, value: string) {
     setFormState((current) => ({ ...current, [field]: value }));
-    setIsSubmitted(false);
+    setStatus("idle");
+    setErrorMessage("");
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("Kinetic Moto lead form submitted", formState);
-    setIsSubmitted(true);
-    setFormState(initialFormState);
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Unable to send your message.");
+      }
+
+      setStatus("success");
+      setFormState(initialFormState);
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(error instanceof Error ? error.message : "Unable to send your message.");
+    }
   }
 
   return (
@@ -87,13 +110,19 @@ export function ContactForm() {
       </label>
 
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <button type="submit" className="rounded-full bg-orange-500 px-7 py-4 text-center text-base font-bold text-stone-950 shadow-lg shadow-orange-500/25 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-900">
-          Send Message
+        <button type="submit" disabled={status === "submitting"} className="rounded-full bg-orange-500 px-7 py-4 text-center text-base font-bold text-stone-950 shadow-lg shadow-orange-500/25 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-900 disabled:cursor-not-allowed disabled:bg-stone-600 disabled:text-stone-300 disabled:shadow-none">
+          {status === "submitting" ? "Sending..." : "Send Message"}
         </button>
 
-        {isSubmitted ? (
+        {status === "success" ? (
           <p className="rounded-full border border-emerald-300/30 bg-emerald-400/10 px-5 py-3 text-sm font-bold text-emerald-100" role="status">
-            Thanks. Your message was logged.
+            Thanks. Your message was sent.
+          </p>
+        ) : null}
+
+        {status === "error" ? (
+          <p className="rounded-full border border-red-300/30 bg-red-400/10 px-5 py-3 text-sm font-bold text-red-100" role="alert">
+            {errorMessage}
           </p>
         ) : null}
       </div>
