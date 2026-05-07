@@ -8,6 +8,7 @@ export const bikes: Bike[] = [
     range: "180 mi",
     topSpeed: "128 mph",
     chargeTime: "28 min",
+    price: "$18,900",
     description:
       "A sharp, city-to-canyon machine with instant torque, adaptive ride modes, and a compact fast-charge battery pack.",
     accent: "from-orange-500 via-amber-500 to-stone-800",
@@ -19,6 +20,7 @@ export const bikes: Bike[] = [
     range: "210 mi",
     topSpeed: "105 mph",
     chargeTime: "34 min",
+    price: "$21,400",
     description:
       "Long-travel suspension, upright ergonomics, and rugged utility for riders who split time between pavement and dirt roads.",
     accent: "from-emerald-500 via-lime-500 to-stone-800",
@@ -30,6 +32,7 @@ export const bikes: Bike[] = [
     range: "145 mi",
     topSpeed: "92 mph",
     chargeTime: "24 min",
+    price: "$14,800",
     description:
       "Lightweight, quiet, and nimble with integrated storage options and confidence-focused power delivery for daily rides.",
     accent: "from-sky-500 via-cyan-400 to-stone-800",
@@ -41,6 +44,7 @@ export const bikes: Bike[] = [
     range: "240 mi",
     topSpeed: "118 mph",
     chargeTime: "38 min",
+    price: "$24,600",
     description:
       "A composed long-range tourer with wind protection, passenger-ready geometry, and effortless highway passing power.",
     accent: "from-violet-500 via-fuchsia-500 to-stone-800",
@@ -52,6 +56,7 @@ export const bikes: Bike[] = [
     range: "120 mi",
     topSpeed: "84 mph",
     chargeTime: "22 min",
+    price: "$13,900",
     description:
       "A lightweight off-road platform tuned for quick line changes, steep climbs, and quiet access to technical terrain.",
     accent: "from-yellow-500 via-orange-500 to-stone-800",
@@ -63,6 +68,7 @@ export const bikes: Bike[] = [
     range: "155 mi",
     topSpeed: "98 mph",
     chargeTime: "26 min",
+    price: "$15,700",
     description:
       "Compact proportions, lively acceleration, and smart daily features for riders who want a fast way through dense city miles.",
     accent: "from-rose-500 via-red-500 to-stone-800",

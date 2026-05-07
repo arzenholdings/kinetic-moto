@@ -7,6 +7,7 @@ export type Bike = {
   range: string;
   topSpeed: string;
   chargeTime: string;
+  price: string;
   description: string;
   accent: string;
 };
