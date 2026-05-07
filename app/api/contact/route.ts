@@ -13,10 +13,13 @@ type Lead = {
 };
 
 type LoggedLead = Lead & {
+  source: string;
   timestamp: string;
 };
 
 const RESEND_EMAIL_ENDPOINT = "https://api.resend.com/emails";
+const CONTACT_LEAD_SOURCE = "contact_form";
+const SUPABASE_CONTACT_LEADS_TABLE = "contact_leads";
 
 function readString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -82,8 +85,51 @@ function logLead(lead: LoggedLead) {
     email: lead.email,
     phone: lead.phone,
     message: lead.message,
+    source: lead.source,
     timestamp: lead.timestamp,
   });
+}
+
+async function storeLeadInSupabase(lead: LoggedLead) {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    console.info("Supabase contact lead storage skipped because Supabase is not configured.");
+    return;
+  }
+
+  const endpoint = `${supabaseUrl.replace(/\/$/, "")}/rest/v1/${SUPABASE_CONTACT_LEADS_TABLE}`;
+
+  try {
+    const supabaseResponse = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        apikey: serviceRoleKey,
+        Authorization: `Bearer ${serviceRoleKey}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({
+        name: lead.name,
+        email: lead.email,
+        phone: lead.phone || null,
+        message: lead.message,
+        source: lead.source,
+        created_at: lead.timestamp,
+      }),
+    });
+
+    if (!supabaseResponse.ok) {
+      const supabaseError = await supabaseResponse.text();
+      console.error("Supabase contact lead insert failed, but lead submission was accepted.", {
+        status: supabaseResponse.status,
+        body: supabaseError,
+      });
+    }
+  } catch (error) {
+    console.error("Supabase contact lead insert threw, but lead submission was accepted.", error);
+  }
 }
 
 async function sendLeadEmail(lead: Lead) {
@@ -144,10 +190,12 @@ export async function POST(request: Request) {
 
   const loggedLead = {
     ...lead,
+    source: CONTACT_LEAD_SOURCE,
     timestamp: new Date().toISOString(),
   };
 
   logLead(loggedLead);
+  await storeLeadInSupabase(loggedLead);
   await sendLeadEmail(lead);
 
   return Response.json({
