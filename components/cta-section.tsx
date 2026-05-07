@@ -1,14 +1,16 @@
+import Link from "next/link";
+
 const callsToAction = [
   {
     title: "Reserve a demo ride",
     body: "Pick a model, choose your preferred route, and get a guided introduction to electric performance.",
-    href: "mailto:demo@kineticmoto.example?subject=Kinetic%20Moto%20demo%20ride",
+    href: "/contact",
     label: "Request demo",
   },
   {
     title: "Build your fleet",
     body: "Need commuter, delivery, or campus mobility options? Start with a tailored fleet consultation.",
-    href: "mailto:fleet@kineticmoto.example?subject=Kinetic%20Moto%20fleet%20consultation",
+    href: "/contact",
     label: "Talk fleet",
   },
 ];
@@ -33,9 +35,9 @@ export function CtaSection() {
               <div key={cta.title} className="rounded-3xl border border-stone-200 bg-stone-50 p-6">
                 <h3 className="text-2xl font-black">{cta.title}</h3>
                 <p className="mt-3 leading-7 text-stone-600">{cta.body}</p>
-                <a href={cta.href} className="mt-6 inline-flex rounded-full bg-stone-950 px-5 py-3 font-bold text-white transition hover:bg-orange-500 hover:text-stone-950 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                <Link href={cta.href} className="mt-6 inline-flex rounded-full bg-stone-950 px-5 py-3 font-bold text-white transition hover:bg-orange-500 hover:text-stone-950 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                   {cta.label}
-                </a>
+                </Link>
               </div>
             ))}
           </div>

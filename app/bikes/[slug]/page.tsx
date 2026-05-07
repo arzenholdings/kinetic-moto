@@ -42,8 +42,6 @@ export default async function BikeDetailPage({ params }: BikeDetailPageProps) {
     { label: "Ride style", value: bike.category },
   ];
 
-  const mailSubject = encodeURIComponent(`Kinetic Moto ${bike.name}`);
-
   return (
     <main className="min-h-screen overflow-hidden bg-stone-950 text-stone-50">
       <section className="relative isolate px-6 py-10 sm:px-8 lg:px-12" aria-labelledby="bike-detail-heading">
@@ -62,12 +60,12 @@ export default async function BikeDetailPage({ params }: BikeDetailPageProps) {
               <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-300 sm:text-xl">{bike.description}</p>
 
               <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-                <a href={`mailto:demo@kineticmoto.example?subject=${mailSubject}%20demo%20ride`} className="rounded-full bg-orange-500 px-7 py-4 text-center text-base font-bold text-stone-950 shadow-lg shadow-orange-500/25 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
+                <Link href="/contact" className="rounded-full bg-orange-500 px-7 py-4 text-center text-base font-bold text-stone-950 shadow-lg shadow-orange-500/25 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
                   Book Ride
-                </a>
-                <a href={`mailto:sales@kineticmoto.example?subject=${mailSubject}%20question`} className="rounded-full border border-stone-500 px-7 py-4 text-center text-base font-bold text-white transition hover:border-orange-300 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
+                </Link>
+                <Link href="/contact" className="rounded-full border border-stone-500 px-7 py-4 text-center text-base font-bold text-white transition hover:border-orange-300 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
                   Contact
-                </a>
+                </Link>
               </div>
             </div>
 
