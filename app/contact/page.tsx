@@ -22,7 +22,7 @@ export default function ContactPage() {
               Start your next electric ride.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-300 sm:text-xl">
-              Book a demo ride, ask about a model, or start a fleet conversation. The form logs submissions locally for now while the lead pipeline is being wired.
+              Book a demo ride, ask about a model, or start a fleet conversation. Your message goes straight to the Kinetic Moto team.
             </p>
             <div className="mt-9 flex flex-col gap-4 sm:flex-row">
               <Link href="/bikes" className="rounded-full border border-stone-500 px-7 py-4 text-center text-base font-bold text-white transition hover:border-orange-300 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
