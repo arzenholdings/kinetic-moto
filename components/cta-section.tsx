@@ -17,7 +17,7 @@ const callsToAction = [
 
 export function CtaSection() {
   return (
-    <section id="book-demo" className="bg-stone-100 px-6 py-20 text-stone-950 sm:px-8 lg:px-12" aria-labelledby="cta-heading">
+    <section id="financing" className="scroll-mt-24 bg-stone-100 px-6 py-20 text-stone-950 sm:px-8 lg:px-12" aria-labelledby="cta-heading">
       <div className="mx-auto max-w-7xl rounded-[2rem] bg-white p-6 shadow-2xl shadow-stone-950/10 sm:p-10 lg:p-14">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
