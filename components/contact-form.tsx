@@ -116,7 +116,7 @@ export function ContactForm() {
 
         {status === "success" ? (
           <p className="rounded-full border border-emerald-300/30 bg-emerald-400/10 px-5 py-3 text-sm font-bold text-emerald-100" role="status">
-            Thanks. Your message was sent.
+            Thanks, we received your message.
           </p>
         ) : null}
 

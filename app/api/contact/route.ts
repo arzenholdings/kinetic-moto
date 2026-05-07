@@ -12,6 +12,10 @@ type Lead = {
   message: string;
 };
 
+type LoggedLead = Lead & {
+  timestamp: string;
+};
+
 const RESEND_EMAIL_ENDPOINT = "https://api.resend.com/emails";
 
 function readString(value: unknown) {
@@ -72,6 +76,57 @@ function buildLeadEmail(lead: Lead) {
   };
 }
 
+function logLead(lead: LoggedLead) {
+  console.info("Kinetic Moto contact lead received", {
+    name: lead.name,
+    email: lead.email,
+    phone: lead.phone,
+    message: lead.message,
+    timestamp: lead.timestamp,
+  });
+}
+
+async function sendLeadEmail(lead: Lead) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const to = process.env.CONTACT_EMAIL_TO;
+  const from = process.env.CONTACT_EMAIL_FROM;
+
+  if (!apiKey || !to || !from) {
+    console.info("Contact email skipped because Resend is not fully configured.");
+    return;
+  }
+
+  const email = buildLeadEmail(lead);
+
+  try {
+    const resendResponse = await fetch(RESEND_EMAIL_ENDPOINT, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from,
+        to,
+        reply_to: lead.email,
+        subject: email.subject,
+        text: email.text,
+        html: email.html,
+      }),
+    });
+
+    if (!resendResponse.ok) {
+      const resendError = await resendResponse.text();
+      console.error("Resend contact email failed, but lead submission was accepted.", {
+        status: resendResponse.status,
+        body: resendError,
+      });
+    }
+  } catch (error) {
+    console.error("Resend contact email threw, but lead submission was accepted.", error);
+  }
+}
+
 export async function POST(request: Request) {
   let body: ContactRequestBody;
 
@@ -87,38 +142,16 @@ export async function POST(request: Request) {
     return Response.json({ error: "Please provide a name, valid email, and message." }, { status: 400 });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_EMAIL_TO;
-  const from = process.env.CONTACT_EMAIL_FROM;
+  const loggedLead = {
+    ...lead,
+    timestamp: new Date().toISOString(),
+  };
 
-  if (!apiKey || !to || !from) {
-    console.error("Contact email is missing Resend environment configuration.");
-    return Response.json({ error: "Contact email is not configured." }, { status: 500 });
-  }
+  logLead(loggedLead);
+  await sendLeadEmail(lead);
 
-  const email = buildLeadEmail(lead);
-
-  const resendResponse = await fetch(RESEND_EMAIL_ENDPOINT, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to,
-      reply_to: lead.email,
-      subject: email.subject,
-      text: email.text,
-      html: email.html,
-    }),
+  return Response.json({
+    ok: true,
+    message: "Thanks, we received your message.",
   });
-
-  if (!resendResponse.ok) {
-    const resendError = await resendResponse.text();
-    console.error("Resend contact email failed", resendResponse.status, resendError);
-    return Response.json({ error: "Unable to send your message right now." }, { status: 502 });
-  }
-
-  return Response.json({ ok: true });
 }
