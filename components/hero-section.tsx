@@ -8,7 +8,7 @@ const stats = [
 
 export function HeroSection() {
   return (
-    <section className="relative isolate px-6 py-10 sm:px-8 lg:px-12" aria-labelledby="hero-heading">
+    <section id="about" className="relative isolate scroll-mt-24 px-6 py-10 sm:px-8 lg:px-12" aria-labelledby="hero-heading">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.28),_transparent_34%),linear-gradient(135deg,_#0c0a09_0%,_#1c1917_48%,_#292524_100%)]" />
       <div className="mx-auto grid max-w-7xl items-center gap-12 py-14 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
         <div>
