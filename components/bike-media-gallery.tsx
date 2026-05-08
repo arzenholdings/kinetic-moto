@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import type { BikeMedia, BikeMediaImage, BikeMediaVideo } from "@/components/bike-card";
+import type { BikeMedia, BikeMediaImage, BikeMediaVideo } from "@/lib/bike-types";
 
 type BikeMediaGalleryProps = {
   accent: string;
@@ -17,7 +17,7 @@ type GalleryItem =
 function getGalleryItems(media?: BikeMedia): GalleryItem[] {
   return [
     ...(media?.heroVideo ? [{ type: "video" as const, ...media.heroVideo }] : []),
-    ...(media?.images || []).map((image) => ({ type: "image" as const, ...image })),
+    ...(media?.galleryImages || []).map((image) => ({ type: "image" as const, ...image })),
   ];
 }
 
