@@ -20,7 +20,7 @@ export function FeaturedBikes() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {featuredBikes.map((bike) => (
-            <BikeCard key={bike.slug} bike={bike} ctaLabel={`Configure ${bike.name}`} />
+            <BikeCard key={bike.slug} bike={bike} ctaLabel={`View ${bike.name}`} />
           ))}
         </div>
 
