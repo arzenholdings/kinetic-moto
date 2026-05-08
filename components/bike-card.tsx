@@ -1,5 +1,23 @@
 import Link from "next/link";
 
+export type BikeMediaImage = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
+
+export type BikeMediaVideo = {
+  src: string;
+  label: string;
+  poster?: string;
+};
+
+export type BikeMedia = {
+  images?: BikeMediaImage[];
+  heroVideo?: BikeMediaVideo;
+};
+
 export type Bike = {
   name: string;
   slug: string;
@@ -10,6 +28,7 @@ export type Bike = {
   price: string;
   description: string;
   accent: string;
+  media?: BikeMedia;
 };
 
 type BikeCardProps = {
