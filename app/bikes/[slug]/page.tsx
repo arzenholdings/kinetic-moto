@@ -58,6 +58,7 @@ export default async function BikeDetailPage({ params }: BikeDetailPageProps) {
     },
     category: bike.category,
     description: bike.description,
+    image: bike.media?.images?.[0]?.src,
     offers: {
       "@type": "Offer",
       availability: "https://schema.org/PreOrder",

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Bike } from "@/components/bike-card";
+import { BikeMediaGallery } from "@/components/bike-media-gallery";
 
 type BikeDetailLayoutProps = {
   bike: Bike;
@@ -46,29 +47,7 @@ export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
               </div>
             </div>
 
-            <div className="relative mx-auto w-full max-w-2xl" aria-label={`${bike.name} hero media area`} role="img">
-              <div className={`absolute -inset-8 rounded-full bg-gradient-to-br ${bike.accent} opacity-30 blur-3xl`} />
-              <div className={`relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br ${bike.accent} p-5 shadow-2xl shadow-black/30`}>
-                <div className="rounded-[1.5rem] bg-stone-950/72 p-5 backdrop-blur">
-                  <div className="mb-6 flex items-center justify-between gap-4 text-sm text-stone-300">
-                    <span>{bike.name} / hero media</span>
-                    <span className="rounded-full bg-white/10 px-3 py-1 font-bold text-white">{bike.price}</span>
-                  </div>
-                  <div className="relative aspect-video min-h-64 overflow-hidden rounded-[1.25rem] bg-stone-950">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_22%,_rgba(255,255,255,0.2),_transparent_24%),linear-gradient(135deg,_rgba(255,255,255,0.08),_transparent_45%)]" />
-                    <div className="absolute bottom-10 left-8 h-28 w-28 rounded-full border-[16px] border-stone-300/80 bg-stone-950 shadow-inner" />
-                    <div className="absolute bottom-10 right-8 h-28 w-28 rounded-full border-[16px] border-stone-300/80 bg-stone-950 shadow-inner" />
-                    <div className="absolute bottom-28 left-24 right-24 h-14 -skew-x-12 rounded-full bg-white shadow-lg shadow-white/20" />
-                    <div className="absolute bottom-42 left-36 h-24 w-64 -skew-x-12 rounded-[2rem] bg-stone-200" />
-                    <div className="absolute bottom-52 right-28 h-4 w-32 -rotate-12 rounded-full bg-stone-500" />
-                    <div className="absolute bottom-56 left-28 h-3 w-32 rotate-12 rounded-full bg-stone-500" />
-                    <div className="absolute left-5 top-5 rounded-full bg-black/30 px-3 py-1 text-xs font-black uppercase tracking-[0.2em] text-white backdrop-blur">
-                      Image / video
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <BikeMediaGallery accent={bike.accent} bikeName={bike.name} media={bike.media} />
           </div>
         </div>
       </section>
