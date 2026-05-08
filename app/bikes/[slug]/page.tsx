@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BikeDetailLayout } from "@/components/bike-detail-layout";
-import { bikes } from "@/lib/bikes";
+import { bikes, getBikeBySlug } from "@/lib/bikes";
+
+const schemaAvailability = {
+  available: "https://schema.org/InStock",
+  preorder: "https://schema.org/PreOrder",
+  coming_soon: "https://schema.org/PreOrder",
+} as const;
 
 type BikeDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -17,7 +23,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: BikeDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const bike = bikes.find((item) => item.slug === slug);
+  const bike = getBikeBySlug(slug);
 
   if (!bike) {
     return {
@@ -42,7 +48,7 @@ export async function generateMetadata({ params }: BikeDetailPageProps): Promise
 
 export default async function BikeDetailPage({ params }: BikeDetailPageProps) {
   const { slug } = await params;
-  const bike = bikes.find((item) => item.slug === slug);
+  const bike = getBikeBySlug(slug);
 
   if (!bike) {
     notFound();
@@ -58,10 +64,10 @@ export default async function BikeDetailPage({ params }: BikeDetailPageProps) {
     },
     category: bike.category,
     description: bike.description,
-    image: bike.media?.images?.[0]?.src,
+    image: bike.heroMedia.image.src,
     offers: {
       "@type": "Offer",
-      availability: "https://schema.org/PreOrder",
+      availability: schemaAvailability[bike.availabilityStatus],
       price: getPriceAmount(bike.price),
       priceCurrency: "USD",
     },

@@ -1,35 +1,5 @@
 import Link from "next/link";
-
-export type BikeMediaImage = {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-};
-
-export type BikeMediaVideo = {
-  src: string;
-  label: string;
-  poster?: string;
-};
-
-export type BikeMedia = {
-  images?: BikeMediaImage[];
-  heroVideo?: BikeMediaVideo;
-};
-
-export type Bike = {
-  name: string;
-  slug: string;
-  category: string;
-  range: string;
-  topSpeed: string;
-  chargeTime: string;
-  price: string;
-  description: string;
-  accent: string;
-  media?: BikeMedia;
-};
+import type { Bike } from "@/lib/bike-types";
 
 type BikeCardProps = {
   bike: Bike;
@@ -65,15 +35,15 @@ export function BikeCard({ bike, ctaLabel = `View ${bike.name}` }: BikeCardProps
         <dl className="mt-6 grid grid-cols-3 gap-3 text-sm">
           <div className="rounded-2xl bg-stone-950 p-3">
             <dt className="text-stone-500">Range</dt>
-            <dd className="mt-1 font-bold text-white">{bike.range}</dd>
+            <dd className="mt-1 font-bold text-white">{bike.specs.range}</dd>
           </div>
           <div className="rounded-2xl bg-stone-950 p-3">
             <dt className="text-stone-500">Top speed</dt>
-            <dd className="mt-1 font-bold text-white">{bike.topSpeed}</dd>
+            <dd className="mt-1 font-bold text-white">{bike.specs.topSpeed}</dd>
           </div>
           <div className="rounded-2xl bg-stone-950 p-3">
             <dt className="text-stone-500">Charge</dt>
-            <dd className="mt-1 font-bold text-white">{bike.chargeTime}</dd>
+            <dd className="mt-1 font-bold text-white">{bike.specs.chargeTime}</dd>
           </div>
         </dl>
         <Link href={`/bikes/${bike.slug}`} className="mt-6 inline-flex items-center justify-center rounded-full border border-stone-700 px-5 py-3 font-bold text-orange-200 transition group-hover:border-orange-300 group-hover:bg-orange-400 group-hover:text-stone-950 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-900">

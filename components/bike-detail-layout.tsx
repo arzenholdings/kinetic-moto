@@ -1,24 +1,16 @@
 import Link from "next/link";
-import type { Bike } from "@/components/bike-card";
 import { BikeMediaGallery } from "@/components/bike-media-gallery";
+import type { Bike } from "@/lib/bike-types";
 
 type BikeDetailLayoutProps = {
   bike: Bike;
 };
 
-const financingHighlights = [
-  "Flexible terms for qualified riders",
-  "Trade-in and fleet conversations welcome",
-  "Final pricing confirmed before reservation",
-];
-
 export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
-  const specs = [
-    { label: "Range", value: bike.range },
-    { label: "Top speed", value: bike.topSpeed },
-    { label: "Fast charge", value: bike.chargeTime },
-    { label: "Ride style", value: bike.category },
-  ];
+  const media = {
+    heroVideo: bike.heroMedia.video,
+    galleryImages: bike.galleryImages.length > 0 ? bike.galleryImages : [bike.heroMedia.image],
+  };
 
   return (
     <main className="min-h-screen overflow-hidden bg-stone-950 text-stone-50">
@@ -47,7 +39,7 @@ export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
               </div>
             </div>
 
-            <BikeMediaGallery accent={bike.accent} bikeName={bike.name} media={bike.media} />
+            <BikeMediaGallery accent={bike.accent} bikeName={bike.name} media={media} />
           </div>
         </div>
       </section>
@@ -66,7 +58,7 @@ export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
           </div>
 
           <dl className="grid gap-4 sm:grid-cols-2">
-            {specs.map((spec) => (
+            {bike.specs.items.map((spec) => (
               <div key={spec.label} className="rounded-3xl border border-white/10 bg-white/5 p-5">
                 <dt className="text-sm text-stone-400">{spec.label}</dt>
                 <dd className="mt-1 text-3xl font-black text-white">{spec.value}</dd>
@@ -81,15 +73,13 @@ export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
           <div>
             <p className="text-sm font-black uppercase tracking-[0.28em] text-orange-600">Financing</p>
             <h2 id="financing-heading" className="mt-3 max-w-3xl text-4xl font-black tracking-tight sm:text-5xl">
-              Plan the ride before the reservation.
+              {bike.financing.headline}
             </h2>
-            <p className="mt-5 text-lg leading-8 text-stone-600">
-              Talk through estimated payments, delivery timing, and fleet needs before making a commitment. No checkout or cart flow has been added.
-            </p>
+            <p className="mt-5 text-lg leading-8 text-stone-600">{bike.financing.body}</p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3">
-            {financingHighlights.map((highlight) => (
+            {bike.financing.highlights.map((highlight) => (
               <div key={highlight} className="rounded-3xl border border-stone-200 bg-white p-5 shadow-xl shadow-stone-950/5">
                 <p className="leading-7 text-stone-700">{highlight}</p>
               </div>
@@ -98,7 +88,7 @@ export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
 
           <div className="lg:col-span-2">
             <Link href="/contact" className="inline-flex rounded-full bg-stone-950 px-7 py-4 text-base font-bold text-white transition hover:bg-orange-500 hover:text-stone-950 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
-              Ask about financing
+              {bike.financing.ctaLabel}
             </Link>
           </div>
         </div>
