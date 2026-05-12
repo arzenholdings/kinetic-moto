@@ -17,6 +17,11 @@ type LoggedLead = Lead & {
   timestamp: string;
 };
 
+type DeliveryResult =
+  | { status: "sent" | "stored" }
+  | { status: "skipped"; reason: string }
+  | { status: "error"; error: string };
+
 const RESEND_EMAIL_ENDPOINT = "https://api.resend.com/emails";
 const CONTACT_LEAD_SOURCE = "contact_form";
 const SUPABASE_CONTACT_LEADS_TABLE = "contact_leads";
@@ -51,6 +56,22 @@ function validateLead(body: ContactRequestBody): Lead | null {
   }
 
   return lead;
+}
+
+function getEmailConfig() {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const to = (process.env.CONTACT_EMAIL_TO || process.env.CONTACT_TO_EMAIL)?.trim();
+  const from = (process.env.CONTACT_EMAIL_FROM || process.env.CONTACT_FROM_EMAIL)?.trim();
+
+  if (!apiKey || !to || !from) {
+    return null;
+  }
+
+  return {
+    apiKey,
+    to,
+    from,
+  };
 }
 
 function buildLeadEmail(lead: Lead) {
@@ -90,13 +111,13 @@ function logLead(lead: LoggedLead) {
   });
 }
 
-async function storeLeadInSupabase(lead: LoggedLead) {
+async function storeLeadInSupabase(lead: LoggedLead): Promise<DeliveryResult> {
   const supabaseUrl = process.env.SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceRoleKey) {
     console.info("Supabase contact lead storage skipped because Supabase is not configured.");
-    return;
+    return { status: "skipped", reason: "Supabase is not configured." };
   }
 
   const endpoint = `${supabaseUrl.replace(/\/$/, "")}/rest/v1/${SUPABASE_CONTACT_LEADS_TABLE}`;
@@ -122,24 +143,27 @@ async function storeLeadInSupabase(lead: LoggedLead) {
 
     if (!supabaseResponse.ok) {
       const supabaseError = await supabaseResponse.text();
-      console.error("Supabase contact lead insert failed, but lead submission was accepted.", {
+      console.error("Supabase contact lead insert failed.", {
         status: supabaseResponse.status,
         body: supabaseError,
       });
+
+      return { status: "error", error: "Lead storage failed." };
     }
+
+    return { status: "stored" };
   } catch (error) {
-    console.error("Supabase contact lead insert threw, but lead submission was accepted.", error);
+    console.error("Supabase contact lead insert threw.", error);
+    return { status: "error", error: "Lead storage failed." };
   }
 }
 
-async function sendLeadEmail(lead: Lead) {
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_EMAIL_TO;
-  const from = process.env.CONTACT_EMAIL_FROM;
+async function sendLeadEmail(lead: Lead): Promise<DeliveryResult> {
+  const config = getEmailConfig();
 
-  if (!apiKey || !to || !from) {
+  if (!config) {
     console.info("Contact email skipped because Resend is not fully configured.");
-    return;
+    return { status: "skipped", reason: "Resend is not fully configured." };
   }
 
   const email = buildLeadEmail(lead);
@@ -148,12 +172,12 @@ async function sendLeadEmail(lead: Lead) {
     const resendResponse = await fetch(RESEND_EMAIL_ENDPOINT, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Bearer ${config.apiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from,
-        to,
+        from: config.from,
+        to: config.to,
         reply_to: lead.email,
         subject: email.subject,
         text: email.text,
@@ -163,13 +187,18 @@ async function sendLeadEmail(lead: Lead) {
 
     if (!resendResponse.ok) {
       const resendError = await resendResponse.text();
-      console.error("Resend contact email failed, but lead submission was accepted.", {
+      console.error("Resend contact email failed.", {
         status: resendResponse.status,
         body: resendError,
       });
+
+      return { status: "error", error: "Contact email could not be sent." };
     }
+
+    return { status: "sent" };
   } catch (error) {
-    console.error("Resend contact email threw, but lead submission was accepted.", error);
+    console.error("Resend contact email threw.", error);
+    return { status: "error", error: "Contact email could not be sent." };
   }
 }
 
@@ -195,8 +224,28 @@ export async function POST(request: Request) {
   };
 
   logLead(loggedLead);
-  await storeLeadInSupabase(loggedLead);
-  await sendLeadEmail(lead);
+  const [storageResult, emailResult] = await Promise.all([storeLeadInSupabase(loggedLead), sendLeadEmail(lead)]);
+
+  if (emailResult.status === "error") {
+    return Response.json(
+      { error: "We could not send your message right now. Please try again or email us directly." },
+      { status: 502 }
+    );
+  }
+
+  const hasDelivery = storageResult.status === "stored" || emailResult.status === "sent";
+
+  if (!hasDelivery) {
+    console.error("Contact lead accepted but no delivery channel is configured.", {
+      storageStatus: storageResult.status,
+      emailStatus: emailResult.status,
+    });
+
+    return Response.json(
+      { error: "Contact form delivery is not configured yet. Please email us directly." },
+      { status: 503 }
+    );
+  }
 
   return Response.json({
     ok: true,
