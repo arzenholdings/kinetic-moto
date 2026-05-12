@@ -100,9 +100,20 @@ export type LinearDashboardResult = {
   fetchedAt?: string;
 };
 
-type LinearGraphqlResponse = {
+type LinearProjectsGraphqlResponse = {
   data?: {
     projects?: LinearConnection<LinearProjectNode>;
+  };
+  errors?: {
+    message?: string;
+  }[];
+};
+
+type LinearProjectIssuesGraphqlResponse = {
+  data?: {
+    project?: {
+      issues?: LinearConnection<LinearIssueNode>;
+    } | null;
   };
   errors?: {
     message?: string;
@@ -199,7 +210,7 @@ type LinearIssueNode = {
 const LINEAR_GRAPHQL_ENDPOINT = "https://api.linear.app/graphql";
 const PROJECTS_QUERY = `
   query LinearProjectsDashboard($after: String) {
-    projects(first: 100, after: $after, includeArchived: false) {
+    projects(first: 50, after: $after, includeArchived: false) {
       nodes {
         id
         name
@@ -230,7 +241,7 @@ const PROJECTS_QUERY = `
             key
           }
         }
-        projectMilestones(first: 50) {
+        projectMilestones(first: 25) {
           nodes {
             id
             name
@@ -241,7 +252,19 @@ const PROJECTS_QUERY = `
             sortOrder
           }
         }
-        issues(first: 100) {
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+`;
+
+const PROJECT_ISSUES_QUERY = `
+  query LinearProjectIssues($projectId: String!, $after: String) {
+    project(id: $projectId) {
+        issues(first: 100, after: $after) {
           nodes {
             id
             identifier
@@ -279,28 +302,12 @@ const PROJECTS_QUERY = `
                 color
               }
             }
-            comments(first: 3) {
-              nodes {
-                id
-                body
-                createdAt
-                user {
-                  id
-                  name
-                  displayName
-                }
-              }
-            }
           }
           pageInfo {
+            endCursor
             hasNextPage
           }
         }
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
     }
   }
 `;
@@ -348,7 +355,7 @@ async function queryLinearProjects(apiKey: string, after: string | null) {
     };
   }
 
-  const payload = (await response.json()) as LinearGraphqlResponse;
+  const payload = (await response.json()) as LinearProjectsGraphqlResponse;
 
   if (payload.errors?.length) {
     console.error("Linear projects GraphQL query returned errors.", payload.errors);
@@ -363,6 +370,97 @@ async function queryLinearProjects(apiKey: string, after: string | null) {
     ok: true as const,
     projects: payload.data?.projects,
   };
+}
+
+async function queryLinearProjectIssues(apiKey: string, projectId: string, after: string | null) {
+  const response = await fetch(LINEAR_GRAPHQL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Authorization: apiKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: PROJECT_ISSUES_QUERY,
+      variables: { projectId, after },
+    }),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    console.error("Linear project issues fetch failed.", {
+      status: response.status,
+      body: await response.text(),
+      projectId,
+    });
+
+    return {
+      ok: false as const,
+      message: "Linear project issues could not be loaded right now.",
+    };
+  }
+
+  const payload = (await response.json()) as LinearProjectIssuesGraphqlResponse;
+
+  if (payload.errors?.length) {
+    console.error("Linear project issues GraphQL query returned errors.", {
+      errors: payload.errors,
+      projectId,
+    });
+
+    return {
+      ok: false as const,
+      message: payload.errors[0]?.message || "Linear returned an unexpected GraphQL error.",
+    };
+  }
+
+  return {
+    ok: true as const,
+    issues: payload.data?.project?.issues,
+  };
+}
+
+async function attachProjectIssues(apiKey: string, project: LinearProjectNode) {
+  const projectId = readString(project.id);
+
+  if (!projectId) {
+    project.issues = { nodes: [], pageInfo: { hasNextPage: false } };
+    return { ok: true as const };
+  }
+
+  const issues: LinearIssueNode[] = [];
+  let after: string | null = null;
+  let hasNextPage = false;
+
+  for (let page = 0; page < 1; page += 1) {
+    const result = await queryLinearProjectIssues(apiKey, projectId, after);
+
+    if (!result.ok) {
+      return result;
+    }
+
+    issues.push(...(result.issues?.nodes || []));
+    hasNextPage = Boolean(result.issues?.pageInfo?.hasNextPage);
+
+    if (!hasNextPage) {
+      break;
+    }
+
+    after = result.issues?.pageInfo?.endCursor || null;
+
+    if (!after) {
+      break;
+    }
+  }
+
+  project.issues = {
+    nodes: issues,
+    pageInfo: {
+      endCursor: after,
+      hasNextPage,
+    },
+  };
+
+  return { ok: true as const };
 }
 
 function mapUser(node: LinearUserNode | null | undefined) {
@@ -667,6 +765,18 @@ export async function getLinearDashboardProjects(): Promise<LinearDashboardResul
 
       if (!after) {
         break;
+      }
+    }
+
+    for (const project of projects) {
+      const result = await attachProjectIssues(apiKey, project);
+
+      if (!result.ok) {
+        return {
+          projects: [],
+          status: "error",
+          message: result.message,
+        };
       }
     }
 
