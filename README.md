@@ -51,6 +51,12 @@ For a one-paste setup, `docs/supabase-phase3-safe-retry.sql` combines both migra
 
 `supabase-products.sql` creates `public.bikes` and seeds it with the current catalog from `lib/bikes.ts`. Product loading uses Supabase when configured and falls back to the local catalog when Supabase is unavailable or returns an unexpected response.
 
+For repeatable launch work, see:
+
+- `docs/setup-inventory.md` - current setup findings and fixes
+- `docs/launch-checklist.md` - go-live verification checklist
+- `docs/service-delivery-playbook.md` - reusable service delivery model
+
 ## Key Routes
 
 - `/` - storefront home with featured bikes

@@ -9,7 +9,9 @@ This file tracks the setup issues discovered during Phase 3 so future Kinetic Mo
 - Supabase secret API key is stored in `.env.local`.
 - Resend API key was corrected locally from the full key file.
 - Supabase REST access works from the Node/app runtime.
-- Supabase SQL migrations have not been applied yet.
+- Supabase Phase 3 SQL migrations have been applied.
+- Production env vars are configured in Vercel for Supabase, Resend, and admin auth.
+- `https://kinetic-moto.com` passes the Phase 4 production smoke check.
 
 ## Issues Found
 
@@ -51,8 +53,15 @@ Clean setup fix:
 
 - Run `docs/supabase-contact-leads.sql`.
 - Run `docs/supabase-products.sql`.
+- For a safer one-paste retry, run `docs/supabase-phase3-safe-retry.sql`.
 - Confirm `contact_leads` has intent, financing, status, priority, follow-up, notes, and review columns.
 - Confirm `bikes` exists and is seeded.
+
+Current state:
+
+- The migration has been applied in production Supabase.
+- `contact_leads` has the Phase 3 lead fields.
+- `bikes` has 6 seeded rows.
 
 ### Project API Keys Cannot Run SQL
 
@@ -149,3 +158,4 @@ The service should sell outcomes, not AI hype: "we make your half-built automati
 - Contact submissions include a hidden honeypot field, a minimum submit time, and a small server-side rate limit.
 - Vercel Web Analytics is wired in through `@vercel/analytics`.
 - `robots.ts` excludes `/admin/`, and `sitemap.ts` publishes the storefront, catalog, bike details, and contact page.
+- `docs/launch-checklist.md` is the current go-live verification checklist.
