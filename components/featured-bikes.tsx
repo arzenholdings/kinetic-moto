@@ -10,13 +10,13 @@ export async function FeaturedBikes() {
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.28em] text-orange-300">Featured bikes</p>
+            <p className="text-sm font-bold uppercase tracking-[0.28em] text-orange-300">Catalog preview</p>
             <h2 id="featured-bikes-heading" className="mt-3 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl">
-              Three ways to ride electric.
+              The storefront is ready for real inventory.
             </h2>
           </div>
           <p className="max-w-xl text-lg leading-8 text-stone-300">
-            Compare launch-ready electric concepts across street, adventure, commuter, touring, trail, and city sport use cases.
+            Temporary launch previews are being replaced with authorized brand-name SKUs, approved product photos, and manufacturer-backed specifications.
           </p>
         </div>
 

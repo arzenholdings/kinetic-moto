@@ -57,16 +57,17 @@ Prepare this before applying for payment/financing providers:
 
 ## Policies Needed Before Full Checkout
 
-Add or finalize these pages:
+Baseline policy pages now exist in the app and are linked from the footer:
 
-- Terms of Service
-- Privacy Policy
-- Shipping/Freight Policy
-- Returns and Cancellation Policy
-- Warranty and Damage Claims Policy
-- Off-road / street-legal disclaimer
-- Financing disclosure page
-- Local pickup and assembly policy
+- `/policies/terms`
+- `/policies/privacy`
+- `/policies/shipping-pickup`
+- `/policies/returns-cancellations`
+- `/policies/warranty`
+- `/policies/legal`
+- `/policies/financing`
+
+Before processing full vehicle checkout, review these pages with the final supplier, merchant, and legal requirements.
 
 ## Financing Provider Notes
 
@@ -126,21 +127,21 @@ Requirements:
 
 ## Site Requirements For Payment Approval
 
-Before applying widely, make the site show:
+Before applying widely, make the site show or finalize:
 
-- real business contact email
-- phone number
-- business address or service area
+- real business contact email: `info@kinetic-moto.com`
+- phone number, once available
+- business address or service area, once available
 - support response expectations
-- policy pages linked in footer
+- policy pages linked in footer: done
 - clear product availability
 - clear refund/cancellation terms
 - no fake/invented products listed as real inventory
 
 ## Implementation Track
 
-1. Add policy pages to the current Next app.
-2. Add footer links for policies/contact.
+1. Add policy pages to the current Next app. Done.
+2. Add footer links for policies/contact. Done.
 3. Add "Request invoice" and "Ask about financing" CTAs.
 4. Decide Shopify checkout vs custom checkout.
 5. Apply for Shopify Payments/Shop Pay and PayPal.
@@ -154,7 +155,7 @@ Subject: Merchant account / financing support for electric motorcycle reseller
 ```text
 Hi [Provider Team],
 
-I’m launching Kinetic Moto, an ecommerce-first reseller for brand-name electric motorcycles and high-performance e-motos, with local setup and support capabilities.
+I'm launching Kinetic Moto, an ecommerce-first reseller for brand-name electric motorcycles and high-performance e-motos, with local setup and support capabilities.
 
 Website: https://kinetic-moto.com
 Contact: info@kinetic-moto.com
@@ -181,4 +182,3 @@ Kinetic Moto
 info@kinetic-moto.com
 https://kinetic-moto.com
 ```
-

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
@@ -21,14 +22,14 @@ export const metadata: Metadata = {
     template: "%s | Kinetic Moto",
   },
   description:
-    "Explore Kinetic Moto electric motorcycles, compare concept models, and book a ride or financing conversation.",
+    "Shop brand-name electric motorcycles online with Kinetic Moto, backed by local setup, pickup, financing conversations, and rider support.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Kinetic Moto | Electric Motorcycles",
     description:
-      "Explore Kinetic Moto electric motorcycles, compare concept models, and book a ride or financing conversation.",
+      "Shop brand-name electric motorcycles online with Kinetic Moto, backed by local setup, pickup, financing conversations, and rider support.",
     url: "/",
     siteName: "Kinetic Moto",
     type: "website",
@@ -52,6 +53,7 @@ export default function RootLayout({
       <body className="min-h-full bg-stone-950">
         <SiteHeader />
         {children}
+        <SiteFooter />
         <Analytics />
       </body>
     </html>

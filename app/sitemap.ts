@@ -2,6 +2,18 @@ import type { MetadataRoute } from "next";
 import { getBikes } from "@/lib/supabase-products";
 
 const SITE_URL = "https://kinetic-moto.com";
+const staticRoutes = [
+  { path: "/about", priority: 0.7 },
+  { path: "/contact", priority: 0.7 },
+  { path: "/policies", priority: 0.6 },
+  { path: "/policies/terms", priority: 0.5 },
+  { path: "/policies/privacy", priority: 0.5 },
+  { path: "/policies/shipping-pickup", priority: 0.5 },
+  { path: "/policies/returns-cancellations", priority: 0.5 },
+  { path: "/policies/warranty", priority: 0.5 },
+  { path: "/policies/financing", priority: 0.5 },
+  { path: "/policies/legal", priority: 0.5 },
+] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const bikes = await getBikes();
@@ -11,13 +23,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: SITE_URL,
       lastModified: now,
-      changeFrequency: "weekly",
+      changeFrequency: "weekly" as const,
       priority: 1,
     },
     {
       url: `${SITE_URL}/bikes`,
       lastModified: now,
-      changeFrequency: "weekly",
+      changeFrequency: "weekly" as const,
       priority: 0.9,
     },
     ...bikes.map((bike) => ({
@@ -26,11 +38,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
-    {
-      url: `${SITE_URL}/contact`,
+    ...staticRoutes.map((route) => ({
+      url: `${SITE_URL}${route.path}`,
       lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
+      changeFrequency: "monthly" as const,
+      priority: route.priority,
+    })),
   ];
 }

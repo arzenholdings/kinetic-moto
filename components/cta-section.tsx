@@ -2,31 +2,31 @@ import { TrackedLink } from "@/components/tracked-link";
 
 const callsToAction = [
   {
-    title: "Reserve a demo ride",
-    body: "Pick a model, choose your preferred route, and get a guided introduction to electric performance.",
-    href: "/contact",
-    label: "Request demo",
+    title: "Ask about a bike",
+    body: "Tell us the model or riding style you want and we will confirm availability, supplier path, and next steps.",
+    href: "/contact?intent=product_question",
+    label: "Request info",
   },
   {
-    title: "Build your fleet",
-    body: "Need commuter, delivery, or campus mobility options? Start with a tailored fleet consultation.",
-    href: "/contact",
-    label: "Talk fleet",
+    title: "Plan payment options",
+    body: "Start the conversation around deposits, manual invoice, pickup, freight, or future financing support.",
+    href: "/contact?intent=financing&financing=true",
+    label: "Talk financing",
   },
 ];
 
 export function CtaSection() {
   return (
     <section id="financing" className="scroll-mt-24 bg-stone-100 px-6 py-20 text-stone-950 sm:px-8 lg:px-12" aria-labelledby="cta-heading">
-      <div className="mx-auto max-w-7xl rounded-[2rem] bg-white p-6 shadow-2xl shadow-stone-950/10 sm:p-10 lg:p-14">
+      <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.28em] text-orange-600">Ready when you are</p>
             <h2 id="cta-heading" className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">
-              Feel the pull before you commit.
+              Get the buying path clear before you commit.
             </h2>
             <p className="mt-5 text-lg leading-8 text-stone-600">
-              Start with a model, a route, or a fleet use case. The team can confirm availability, financing fit, and delivery timing before you commit.
+              Start with a target model, budget, or timeline. The team can confirm availability, payment path, freight or pickup options, and dealer-account status before any final purchase.
             </p>
           </div>
 

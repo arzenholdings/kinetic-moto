@@ -62,7 +62,7 @@ export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
             <p className="text-sm font-bold uppercase tracking-[0.28em] text-orange-300">Starting price</p>
             <p className="mt-3 text-5xl font-black tracking-tight text-white">{bike.price}</p>
             <p className="mt-4 leading-7 text-orange-100">
-              Estimated launch pricing for the {bike.name}. Ask Kinetic Moto about trim options, delivery timing, and financing fit.
+              Catalog-preview pricing and specs for {bike.name}. Final brand, model, availability, freight, and payment options are confirmed before quote or purchase.
             </p>
             <TrackedLink href={bookRideHref} eventName="bike_detail_cta_click" eventProperties={{ bike: bike.slug, intent: "contact_sales" }} className="mt-6 inline-flex rounded-full bg-orange-500 px-5 py-3 font-bold text-stone-950 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
               Contact Sales

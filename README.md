@@ -1,6 +1,6 @@
 # Kinetic Moto
 
-Next.js 16 storefront for the Kinetic Moto electric motorcycle catalog, contact flow, Supabase lead capture, and lightweight lead review admin.
+Next.js 16 storefront for the Kinetic Moto electric motorcycle catalog, contact flow, Supabase lead capture, merchant-readiness policy pages, and lightweight lead review admin.
 
 ## Local Development
 
@@ -68,7 +68,9 @@ For repeatable launch work, see:
 ## Key Routes
 
 - `/` - storefront home with featured bikes
-- `/bikes` - full bike catalog
+- `/about` - reseller positioning and local support model
+- `/bikes` - launch catalog preview
 - `/bikes/[slug]` - bike detail pages with contact and financing CTAs
 - `/contact` - contact, booking, and financing lead capture
+- `/policies` - terms, privacy, shipping, returns, warranty, financing, and legal pages
 - `/admin/leads` - dense operator view for lead review and follow-up

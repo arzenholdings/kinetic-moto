@@ -4,8 +4,8 @@ import { BikeCard } from "@/components/bike-card";
 import { getBikes } from "@/lib/supabase-products";
 
 export const metadata: Metadata = {
-  title: "Bikes | Kinetic Moto",
-  description: "Explore the Kinetic Moto electric motorcycle lineup.",
+  title: "Catalog",
+  description: "Browse Kinetic Moto launch catalog candidates and request availability for brand-name electric motorcycles.",
 };
 
 export default async function BikesPage() {
@@ -23,11 +23,11 @@ export default async function BikesPage() {
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.28em] text-orange-300">Product listing</p>
               <h1 id="bikes-heading" className="mt-3 max-w-4xl text-5xl font-black tracking-tight text-white sm:text-6xl lg:text-7xl">
-                Find the electric bike that fits your ride.
+                Launch catalog preview.
               </h1>
             </div>
             <p className="text-lg leading-8 text-stone-300 sm:text-xl">
-              Browse Kinetic Moto concepts by range, ride style, and charging profile. Each card is wired with a stable slug for future product detail pages.
+              The catalog framework is being converted from concept placeholders to real authorized reseller SKUs. Ask about availability, setup, pickup, and financing while dealer accounts are being opened.
             </p>
           </div>
         </div>
