@@ -28,11 +28,15 @@ CONTACT_EMAIL_TO=
 CONTACT_EMAIL_FROM=
 SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
+ADMIN_USERNAME=
+ADMIN_PASSWORD=
 ```
 
 The storefront and contact page still render when Supabase or Resend are missing. Lead storage, admin lead loading, and email delivery only run when their env vars are configured.
 
 For the current production email setup, use `CONTACT_EMAIL_TO=info@kinetic-moto.com` and `CONTACT_EMAIL_FROM=info@kinetic-moto.com`. The Resend account must keep `kinetic-moto.com` verified before production contact emails will send.
+
+`/admin/leads` is protected with HTTP Basic Auth. Configure `ADMIN_USERNAME` and `ADMIN_PASSWORD` in local and production environments before using the admin route.
 
 ## Supabase Setup
 

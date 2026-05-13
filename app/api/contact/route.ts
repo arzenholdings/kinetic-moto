@@ -8,6 +8,8 @@ type ContactRequestBody = {
   financing_interest?: unknown;
   budget_range?: unknown;
   purchase_timeframe?: unknown;
+  company?: unknown;
+  started_at?: unknown;
 };
 
 type Lead = {
@@ -38,6 +40,11 @@ const SUPABASE_CONTACT_LEADS_TABLE = "contact_leads";
 const DEFAULT_STATUS = "new";
 const HIGH_INTENT_INTERESTS = new Set(["book_ride", "financing"]);
 const VALID_INTEREST_TYPES = new Set(["general", "book_ride", "financing", "fleet", "support"]);
+const MIN_FORM_SECONDS = 2;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+
+const rateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
 
 function readString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -58,6 +65,45 @@ function readBoolean(value: unknown) {
     return ["true", "yes", "on", "1"].includes(value.toLowerCase());
   }
 
+  return false;
+}
+
+function readTimestamp(value: unknown) {
+  const text = readString(value);
+
+  if (!text) {
+    return null;
+  }
+
+  const timestamp = Number(text);
+
+  return Number.isFinite(timestamp) ? timestamp : null;
+}
+
+function getClientKey(request: Request) {
+  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const realIp = request.headers.get("x-real-ip")?.trim();
+
+  return forwardedFor || realIp || "unknown";
+}
+
+function isRateLimited(key: string) {
+  const now = Date.now();
+  const current = rateLimitBuckets.get(key);
+
+  if (!current || current.resetAt <= now) {
+    rateLimitBuckets.set(key, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS,
+    });
+    return false;
+  }
+
+  if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return true;
+  }
+
+  current.count += 1;
   return false;
 }
 
@@ -277,6 +323,23 @@ export async function POST(request: Request) {
     body = await request.json();
   } catch {
     return Response.json({ error: "Invalid request body." }, { status: 400 });
+  }
+
+  if (readString(body.company)) {
+    return Response.json({
+      ok: true,
+      message: "Thanks, we received your message.",
+    });
+  }
+
+  const startedAt = readTimestamp(body.started_at);
+
+  if (!startedAt || Date.now() - startedAt < MIN_FORM_SECONDS * 1000) {
+    return Response.json({ error: "Please wait a moment before sending your message." }, { status: 400 });
+  }
+
+  if (isRateLimited(getClientKey(request))) {
+    return Response.json({ error: "Too many messages were submitted. Please try again later." }, { status: 429 });
   }
 
   const lead = validateLead(body);

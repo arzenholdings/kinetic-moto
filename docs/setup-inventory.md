@@ -116,6 +116,8 @@ Clean setup fix:
    - `CONTACT_EMAIL_FROM` or `CONTACT_FROM_EMAIL`
    - `SUPABASE_URL`
    - `SUPABASE_SERVICE_ROLE_KEY`
+   - `ADMIN_USERNAME`
+   - `ADMIN_PASSWORD`
 5. Run Supabase SQL:
    - `docs/supabase-contact-leads.sql`
    - `docs/supabase-products.sql`
@@ -140,3 +142,10 @@ This cleanup pattern is a real service candidate:
 - leave a repeatable handoff document
 
 The service should sell outcomes, not AI hype: "we make your half-built automation reliable, documented, and testable."
+
+## Phase 4 Hardening Notes
+
+- `/admin/leads` is protected by HTTP Basic Auth through `proxy.ts`.
+- Contact submissions include a hidden honeypot field, a minimum submit time, and a small server-side rate limit.
+- Vercel Web Analytics is wired in through `@vercel/analytics`.
+- `robots.ts` excludes `/admin/`, and `sitemap.ts` publishes the storefront, catalog, bike details, and contact page.

@@ -12,6 +12,8 @@ type LeadFormState = {
   financing_interest: boolean;
   budget_range: string;
   purchase_timeframe: string;
+  company: string;
+  started_at: string;
 };
 
 type ContactFormProps = {
@@ -30,6 +32,8 @@ const defaultFormState: LeadFormState = {
   financing_interest: false,
   budget_range: "",
   purchase_timeframe: "",
+  company: "",
+  started_at: "",
 };
 
 function getInitialFormState({
@@ -44,6 +48,7 @@ function getInitialFormState({
     bike_slug: initialBikeSlug,
     interest_type: interestType,
     financing_interest: initialFinancingInterest || interestType === "financing",
+    started_at: String(Date.now()),
   };
 }
 
@@ -90,6 +95,18 @@ export function ContactForm(props: ContactFormProps) {
   return (
     <form onSubmit={handleSubmit} className="rounded-[2rem] border border-white/10 bg-stone-900/80 p-6 shadow-2xl shadow-black/20 backdrop-blur sm:p-8" aria-label="Contact Kinetic Moto">
       <div className="grid gap-5 sm:grid-cols-2">
+        <input
+          type="text"
+          name="company"
+          value={formState.company}
+          onChange={(event) => updateField("company", event.target.value)}
+          className="hidden"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+        />
+        <input type="hidden" name="started_at" value={formState.started_at} readOnly />
+
         <label className="block">
           <span className="text-sm font-bold uppercase tracking-[0.2em] text-stone-400">Name</span>
           <input
