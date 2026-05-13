@@ -26,7 +26,7 @@ export function CtaSection() {
               Feel the pull before you commit.
             </h2>
             <p className="mt-5 text-lg leading-8 text-stone-600">
-              Kinetic Moto is currently using placeholder content for launch planning. These CTAs are wired as accessible links and can be swapped for booking flows later.
+              Start with a model, a route, or a fleet use case. The team can confirm availability, financing fit, and delivery timing before you commit.
             </p>
           </div>
 

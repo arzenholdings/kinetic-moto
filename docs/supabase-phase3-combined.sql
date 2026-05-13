@@ -160,7 +160,7 @@ insert into public.bikes (
   '128 mph',
   '28 min',
   '$18,900',
-  'A sharp, city-to-canyon machine with instant torque, adaptive ride modes, and a compact fast-charge battery pack.',
+  'A compact streetfighter tuned for quick launches, canyon exits, and weekday commutes. Volt RS pairs a low-mounted battery pack with sharp steering geometry and configurable ride modes.',
   'from-orange-500 via-amber-500 to-stone-800',
   '{"images":[{"src":"/bikes/volt-rs-side.png","alt":"Volt RS side profile electric motorcycle render","width":1200,"height":800},{"src":"/bikes/volt-rs-front.png","alt":"Volt RS front three-quarter electric motorcycle render","width":1200,"height":800}]}'::jsonb,
   true
@@ -173,7 +173,7 @@ insert into public.bikes (
   '105 mph',
   '34 min',
   '$21,400',
-  'Long-travel suspension, upright ergonomics, and rugged utility for riders who split time between pavement and dirt roads.',
+  'A long-range dual-sport built for riders who split their week between pavement, gravel, and fire-road miles. Terra X adds upright ergonomics, protected bodywork, and utility mounting points.',
   'from-emerald-500 via-lime-500 to-stone-800',
   '{"images":[{"src":"/bikes/terra-x-side.png","alt":"Terra X side profile adventure electric motorcycle render","width":1200,"height":800},{"src":"/bikes/terra-x-front.png","alt":"Terra X front three-quarter adventure electric motorcycle render","width":1200,"height":800}]}'::jsonb,
   true
@@ -186,7 +186,7 @@ insert into public.bikes (
   '92 mph',
   '24 min',
   '$14,800',
-  'Lightweight, quiet, and nimble with integrated storage options and confidence-focused power delivery for daily rides.',
+  'A lightweight commuter with quiet acceleration, simple charging, and city-friendly proportions. Pulse C is built for daily riders who want predictable range without giving up weekend fun.',
   'from-sky-500 via-cyan-400 to-stone-800',
   '{"images":[{"src":"/bikes/pulse-c-side.png","alt":"Pulse C side profile urban electric motorcycle render","width":1200,"height":800},{"src":"/bikes/pulse-c-front.png","alt":"Pulse C front three-quarter urban electric motorcycle render","width":1200,"height":800}]}'::jsonb,
   true
@@ -199,7 +199,7 @@ insert into public.bikes (
   '118 mph',
   '38 min',
   '$24,600',
-  'A composed long-range tourer with wind protection, passenger-ready geometry, and effortless highway passing power.',
+  'A composed electric tourer for longer rides, passenger comfort, and fast highway passing. Vector GT brings wind protection, stable geometry, and the largest estimated pack in the lineup.',
   'from-violet-500 via-fuchsia-500 to-stone-800',
   '{"images":[{"src":"/bikes/vector-gt-side.png","alt":"Vector GT side profile touring electric motorcycle render","width":1200,"height":800},{"src":"/bikes/vector-gt-front.png","alt":"Vector GT front three-quarter touring electric motorcycle render","width":1200,"height":800}]}'::jsonb,
   true
@@ -212,7 +212,7 @@ insert into public.bikes (
   '84 mph',
   '22 min',
   '$13,900',
-  'A lightweight off-road platform tuned for quick line changes, steep climbs, and quiet access to technical terrain.',
+  'A quiet trail platform for technical terrain, steep climbs, and quick line changes. Ridge MX keeps weight low and response immediate for riders who care about control more than noise.',
   'from-yellow-500 via-orange-500 to-stone-800',
   '{"images":[{"src":"/bikes/ridge-mx-side.png","alt":"Ridge MX side profile trail electric motorcycle render","width":1200,"height":800},{"src":"/bikes/ridge-mx-front.png","alt":"Ridge MX front three-quarter trail electric motorcycle render","width":1200,"height":800}]}'::jsonb,
   true
@@ -225,7 +225,7 @@ insert into public.bikes (
   '98 mph',
   '26 min',
   '$15,700',
-  'Compact proportions, lively acceleration, and smart daily features for riders who want a fast way through dense city miles.',
+  'A compact city sport bike with lively acceleration, confident brakes, and daily-friendly ergonomics. Metro S is aimed at dense streets, short hops, and riders who want an easy electric step-up.',
   'from-rose-500 via-red-500 to-stone-800',
   '{"images":[{"src":"/bikes/metro-s-side.png","alt":"Metro S side profile city electric motorcycle render","width":1200,"height":800},{"src":"/bikes/metro-s-front.png","alt":"Metro S front three-quarter city electric motorcycle render","width":1200,"height":800}]}'::jsonb,
   true

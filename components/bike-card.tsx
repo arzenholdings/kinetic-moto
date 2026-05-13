@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { TrackedLink } from "@/components/tracked-link";
 
 export type BikeMediaImage = {
@@ -37,25 +38,30 @@ type BikeCardProps = {
 };
 
 export function BikeCard({ bike, ctaLabel = `View ${bike.name}` }: BikeCardProps) {
+  const primaryImage = bike.media?.images?.[0];
+
   return (
     <article id={bike.slug} className="group flex h-full scroll-mt-24 flex-col overflow-hidden rounded-[2rem] border border-stone-800 bg-stone-900/70 shadow-xl shadow-black/20 transition hover:-translate-y-1 hover:border-orange-400/50">
-      <div className={`relative min-h-56 bg-gradient-to-br ${bike.accent} p-6`}>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_15%,_rgba(255,255,255,0.22),_transparent_28%)]" />
-        <div className="relative flex items-start justify-between gap-4">
+      <div className={`relative aspect-[3/2] overflow-hidden bg-gradient-to-br ${bike.accent}`}>
+        {primaryImage ? (
+          <Image
+            src={primaryImage.src}
+            alt={primaryImage.alt}
+            fill
+            sizes="(min-width: 768px) 33vw, 100vw"
+            className="object-cover transition duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_15%,_rgba(255,255,255,0.22),_transparent_28%)]" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950/50 via-transparent to-stone-950/20" />
+        <div className="relative flex items-start justify-between gap-4 p-5">
           <span className="rounded-full bg-black/30 px-3 py-1 text-xs font-bold uppercase tracking-[0.22em] text-white backdrop-blur">
             {bike.category}
           </span>
           <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
             /{bike.slug}
           </span>
-        </div>
-        <div className="absolute bottom-8 left-6 right-6" aria-label={`${bike.name} image placeholder`} role="img">
-          <div className="relative h-28">
-            <div className="absolute bottom-0 left-2 h-16 w-16 rounded-full border-[10px] border-white/75 bg-black/35" />
-            <div className="absolute bottom-0 right-2 h-16 w-16 rounded-full border-[10px] border-white/75 bg-black/35" />
-            <div className="absolute bottom-12 left-16 right-16 h-8 -skew-x-12 rounded-full bg-white/90" />
-            <div className="absolute bottom-17 left-24 h-12 w-28 -skew-x-12 rounded-3xl bg-black/35" />
-          </div>
         </div>
       </div>
 

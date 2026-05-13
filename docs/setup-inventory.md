@@ -166,3 +166,10 @@ The service should sell outcomes, not AI hype: "we make your half-built automati
 - CTA and contact-form conversion events are tracked with Vercel Analytics.
 - `robots.ts` excludes `/admin/`, and `sitemap.ts` publishes the storefront, catalog, bike details, and contact page.
 - `docs/launch-checklist.md` is the current go-live verification checklist.
+
+## Phase 6 Catalog Notes
+
+- The six-bike catalog now has stronger sellable descriptions in `lib/bikes.ts`.
+- The generated raster bike renders in `public/bikes/` replaced the earlier placeholder-style artwork.
+- Bike cards and the homepage hero now render catalog imagery directly.
+- Supabase `bikes.description` rows were updated through the REST API so production content matches local fallback content.

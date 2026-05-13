@@ -72,6 +72,13 @@ Use this before any production launch or major go-live change.
 - Conversion events are tracked for catalog clicks, detail-page CTAs, and contact submission outcomes.
 - Page metadata has canonical and OpenGraph basics.
 
+## Catalog
+
+- Homepage hero shows real catalog imagery rather than a placeholder drawing.
+- `/bikes` cards show the primary image for each model.
+- `/bikes/[slug]` gallery renders side and front images for each model.
+- Supabase bike rows match the descriptions in `lib/bikes.ts`.
+
 ## Verification Commands
 
 ```bash

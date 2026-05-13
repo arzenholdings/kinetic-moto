@@ -16,7 +16,7 @@ export async function FeaturedBikes() {
             </h2>
           </div>
           <p className="max-w-xl text-lg leading-8 text-stone-300">
-            Placeholder specs and slugs are ready for routing, inventory, and production imagery when the catalog is finalized.
+            Compare launch-ready electric concepts across street, adventure, commuter, touring, trail, and city sport use cases.
           </p>
         </div>
 

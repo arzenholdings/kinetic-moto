@@ -1,10 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import { TrackedLink } from "@/components/tracked-link";
 
 const stats = [
-  { label: "Electric range", value: "180 mi" },
-  { label: "Charge to 80%", value: "28 min" },
-  { label: "Demo fleet", value: "12 bikes" },
+  { label: "Range up to", value: "240 mi" },
+  { label: "Fast charge", value: "22-38 min" },
+  { label: "Launch models", value: "6" },
 ];
 
 export function HeroSection() {
@@ -40,23 +41,20 @@ export function HeroSection() {
           </dl>
         </div>
 
-        <div className="relative mx-auto w-full max-w-xl" aria-label="Concept image placeholder for the Kinetic Moto Volt RS electric motorcycle" role="img">
+        <div className="relative mx-auto w-full max-w-xl">
           <div className="absolute -inset-8 rounded-full bg-orange-500/20 blur-3xl" />
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-stone-800 to-stone-950 p-6 shadow-2xl">
-            <div className="rounded-[1.5rem] bg-stone-900 p-6">
-              <div className="mb-8 flex items-center justify-between text-sm text-stone-400">
-                <span>Volt RS / prototype visual</span>
-                <span aria-hidden="true">● ● ●</span>
-              </div>
-              <div className="relative h-64 sm:h-80">
-                <div className="absolute bottom-8 left-4 h-24 w-24 rounded-full border-[14px] border-stone-600 bg-stone-950 shadow-inner" />
-                <div className="absolute bottom-8 right-4 h-24 w-24 rounded-full border-[14px] border-stone-600 bg-stone-950 shadow-inner" />
-                <div className="absolute bottom-24 left-20 right-20 h-12 -skew-x-12 rounded-full bg-orange-500 shadow-lg shadow-orange-500/40" />
-                <div className="absolute bottom-36 left-28 h-20 w-56 -skew-x-12 rounded-[2rem] bg-stone-200" />
-                <div className="absolute bottom-44 right-24 h-4 w-28 -rotate-12 rounded-full bg-stone-500" />
-                <div className="absolute bottom-48 left-24 h-3 w-28 rotate-12 rounded-full bg-stone-500" />
-                <div className="absolute bottom-32 left-40 h-24 w-24 rounded-full border border-orange-300/40" />
-              </div>
+          <div className="relative aspect-[3/2] overflow-hidden rounded-[2rem] border border-white/10 bg-stone-900 shadow-2xl shadow-black/40">
+            <Image
+              src="/bikes/volt-rs-side.png"
+              alt="Volt RS electric motorcycle studio render"
+              fill
+              priority
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-stone-950/85 to-transparent p-5">
+              <p className="text-sm font-bold uppercase tracking-[0.22em] text-orange-200">Volt RS launch model</p>
+              <p className="mt-1 text-sm text-stone-300">Street performance / 180 mi estimated range</p>
             </div>
           </div>
         </div>

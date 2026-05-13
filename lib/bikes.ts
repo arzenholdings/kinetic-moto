@@ -10,7 +10,7 @@ export const bikes: Bike[] = [
     chargeTime: "28 min",
     price: "$18,900",
     description:
-      "A sharp, city-to-canyon machine with instant torque, adaptive ride modes, and a compact fast-charge battery pack.",
+      "A compact streetfighter tuned for quick launches, canyon exits, and weekday commutes. Volt RS pairs a low-mounted battery pack with sharp steering geometry and configurable ride modes.",
     accent: "from-orange-500 via-amber-500 to-stone-800",
     media: {
       images: [
@@ -28,7 +28,7 @@ export const bikes: Bike[] = [
     chargeTime: "34 min",
     price: "$21,400",
     description:
-      "Long-travel suspension, upright ergonomics, and rugged utility for riders who split time between pavement and dirt roads.",
+      "A long-range dual-sport built for riders who split their week between pavement, gravel, and fire-road miles. Terra X adds upright ergonomics, protected bodywork, and utility mounting points.",
     accent: "from-emerald-500 via-lime-500 to-stone-800",
     media: {
       images: [
@@ -46,7 +46,7 @@ export const bikes: Bike[] = [
     chargeTime: "24 min",
     price: "$14,800",
     description:
-      "Lightweight, quiet, and nimble with integrated storage options and confidence-focused power delivery for daily rides.",
+      "A lightweight commuter with quiet acceleration, simple charging, and city-friendly proportions. Pulse C is built for daily riders who want predictable range without giving up weekend fun.",
     accent: "from-sky-500 via-cyan-400 to-stone-800",
     media: {
       images: [
@@ -64,7 +64,7 @@ export const bikes: Bike[] = [
     chargeTime: "38 min",
     price: "$24,600",
     description:
-      "A composed long-range tourer with wind protection, passenger-ready geometry, and effortless highway passing power.",
+      "A composed electric tourer for longer rides, passenger comfort, and fast highway passing. Vector GT brings wind protection, stable geometry, and the largest estimated pack in the lineup.",
     accent: "from-violet-500 via-fuchsia-500 to-stone-800",
     media: {
       images: [
@@ -82,7 +82,7 @@ export const bikes: Bike[] = [
     chargeTime: "22 min",
     price: "$13,900",
     description:
-      "A lightweight off-road platform tuned for quick line changes, steep climbs, and quiet access to technical terrain.",
+      "A quiet trail platform for technical terrain, steep climbs, and quick line changes. Ridge MX keeps weight low and response immediate for riders who care about control more than noise.",
     accent: "from-yellow-500 via-orange-500 to-stone-800",
     media: {
       images: [
@@ -100,7 +100,7 @@ export const bikes: Bike[] = [
     chargeTime: "26 min",
     price: "$15,700",
     description:
-      "Compact proportions, lively acceleration, and smart daily features for riders who want a fast way through dense city miles.",
+      "A compact city sport bike with lively acceleration, confident brakes, and daily-friendly ergonomics. Metro S is aimed at dense streets, short hops, and riders who want an easy electric step-up.",
     accent: "from-rose-500 via-red-500 to-stone-800",
     media: {
       images: [
