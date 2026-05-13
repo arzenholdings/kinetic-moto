@@ -28,9 +28,16 @@ export default async function AdminLeadsPage() {
                 Review recent contact form submissions, mark new leads as reviewed, and keep internal notes.
               </p>
             </div>
-            <Link href="/contact" className="rounded-full border border-orange-400/30 bg-orange-400/10 px-5 py-3 text-center text-sm font-bold text-orange-200 transition hover:border-orange-300 hover:bg-orange-400/20 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
-              View contact form
-            </Link>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link href="/contact" className="rounded-full border border-orange-400/30 bg-orange-400/10 px-5 py-3 text-center text-sm font-bold text-orange-200 transition hover:border-orange-300 hover:bg-orange-400/20 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
+                View contact form
+              </Link>
+              <form action="/api/admin/logout" method="post">
+                <button type="submit" className="w-full rounded-full border border-stone-600 px-5 py-3 text-center text-sm font-bold text-stone-200 transition hover:border-stone-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950 sm:w-auto">
+                  Sign out
+                </button>
+              </form>
+            </div>
           </div>
 
           <div className="mt-12 overflow-hidden rounded-[2rem] border border-white/10 bg-stone-900/80 shadow-2xl shadow-black/20 backdrop-blur">

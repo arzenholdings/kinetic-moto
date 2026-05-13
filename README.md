@@ -30,13 +30,18 @@ SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
 ADMIN_USERNAME=
 ADMIN_PASSWORD=
+ADMIN_SESSION_SECRET=
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
 ```
 
 The storefront and contact page still render when Supabase or Resend are missing. Lead storage, admin lead loading, and email delivery only run when their env vars are configured.
 
 For the current production email setup, use `CONTACT_EMAIL_TO=info@kinetic-moto.com` and `CONTACT_EMAIL_FROM=info@kinetic-moto.com`. The Resend account must keep `kinetic-moto.com` verified before production contact emails will send.
 
-`/admin/leads` is protected with HTTP Basic Auth. Configure `ADMIN_USERNAME` and `ADMIN_PASSWORD` in local and production environments before using the admin route.
+`/admin/leads` is protected with an admin login session. Configure `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET` in local and production environments before using the admin route. HTTP Basic Auth is still accepted as a fallback for scripted smoke tests.
+
+Turnstile spam protection is optional. If `TURNSTILE_SECRET_KEY` is configured, contact submissions must include a valid Cloudflare Turnstile token. Add `NEXT_PUBLIC_TURNSTILE_SITE_KEY` to render the widget on the contact form.
 
 ## Supabase Setup
 

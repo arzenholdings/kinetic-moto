@@ -44,7 +44,12 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             </div>
           </div>
 
-          <ContactForm initialBikeSlug={bikeSlug} initialInterestType={intent} initialFinancingInterest={financingInterest} />
+          <ContactForm
+            initialBikeSlug={bikeSlug}
+            initialInterestType={intent}
+            initialFinancingInterest={financingInterest}
+            turnstileSiteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+          />
         </div>
       </section>
     </main>

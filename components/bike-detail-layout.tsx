@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Bike } from "@/components/bike-card";
 import { BikeMediaGallery } from "@/components/bike-media-gallery";
+import { TrackedLink } from "@/components/tracked-link";
 
 type BikeDetailLayoutProps = {
   bike: Bike;
@@ -41,12 +42,12 @@ export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
               <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-300 sm:text-xl">{bike.description}</p>
 
               <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-                <Link href={bookRideHref} className="rounded-full bg-orange-500 px-7 py-4 text-center text-base font-bold text-stone-950 shadow-lg shadow-orange-500/25 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
+                <TrackedLink href={bookRideHref} eventName="bike_detail_cta_click" eventProperties={{ bike: bike.slug, intent: "book_ride" }} className="rounded-full bg-orange-500 px-7 py-4 text-center text-base font-bold text-stone-950 shadow-lg shadow-orange-500/25 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
                   Book a ride
-                </Link>
-                <Link href={financingHref} className="rounded-full border border-stone-500 px-7 py-4 text-center text-base font-bold text-white transition hover:border-orange-300 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
+                </TrackedLink>
+                <TrackedLink href={financingHref} eventName="bike_detail_cta_click" eventProperties={{ bike: bike.slug, intent: "financing" }} className="rounded-full border border-stone-500 px-7 py-4 text-center text-base font-bold text-white transition hover:border-orange-300 hover:text-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
                   Ask about financing
-                </Link>
+                </TrackedLink>
               </div>
             </div>
 
@@ -63,9 +64,9 @@ export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
             <p className="mt-4 leading-7 text-orange-100">
               Estimated launch pricing for the {bike.name}. Final availability, trim packages, and delivery options can be confirmed with Kinetic Moto.
             </p>
-            <Link href={bookRideHref} className="mt-6 inline-flex rounded-full bg-orange-500 px-5 py-3 font-bold text-stone-950 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
+            <TrackedLink href={bookRideHref} eventName="bike_detail_cta_click" eventProperties={{ bike: bike.slug, intent: "contact_sales" }} className="mt-6 inline-flex rounded-full bg-orange-500 px-5 py-3 font-bold text-stone-950 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
               Contact Sales
-            </Link>
+            </TrackedLink>
           </div>
 
           <dl className="grid gap-4 sm:grid-cols-2">
@@ -100,9 +101,9 @@ export function BikeDetailLayout({ bike }: BikeDetailLayoutProps) {
           </div>
 
           <div className="lg:col-span-2">
-            <Link href={financingHref} className="inline-flex rounded-full bg-stone-950 px-7 py-4 text-base font-bold text-white transition hover:bg-orange-500 hover:text-stone-950 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+            <TrackedLink href={financingHref} eventName="bike_detail_cta_click" eventProperties={{ bike: bike.slug, intent: "financing_section" }} className="inline-flex rounded-full bg-stone-950 px-7 py-4 text-base font-bold text-white transition hover:bg-orange-500 hover:text-stone-950 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
               Ask about financing
-            </Link>
+            </TrackedLink>
           </div>
         </div>
       </section>

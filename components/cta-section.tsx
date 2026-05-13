@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { TrackedLink } from "@/components/tracked-link";
 
 const callsToAction = [
   {
@@ -35,9 +35,9 @@ export function CtaSection() {
               <div key={cta.title} className="rounded-3xl border border-stone-200 bg-stone-50 p-6">
                 <h3 className="text-2xl font-black">{cta.title}</h3>
                 <p className="mt-3 leading-7 text-stone-600">{cta.body}</p>
-                <Link href={cta.href} className="mt-6 inline-flex rounded-full bg-stone-950 px-5 py-3 font-bold text-white transition hover:bg-orange-500 hover:text-stone-950 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
+                <TrackedLink href={cta.href} eventName="home_cta_click" eventProperties={{ intent: cta.label }} className="mt-6 inline-flex rounded-full bg-stone-950 px-5 py-3 font-bold text-white transition hover:bg-orange-500 hover:text-stone-950 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
                   {cta.label}
-                </Link>
+                </TrackedLink>
               </div>
             ))}
           </div>

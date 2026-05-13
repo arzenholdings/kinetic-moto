@@ -127,6 +127,9 @@ Clean setup fix:
    - `SUPABASE_SERVICE_ROLE_KEY`
    - `ADMIN_USERNAME`
    - `ADMIN_PASSWORD`
+   - `ADMIN_SESSION_SECRET`
+   - Optional: `NEXT_PUBLIC_TURNSTILE_SITE_KEY`
+   - Optional: `TURNSTILE_SECRET_KEY`
 5. Run Supabase SQL:
    - `docs/supabase-contact-leads.sql`
    - `docs/supabase-products.sql`
@@ -154,8 +157,12 @@ The service should sell outcomes, not AI hype: "we make your half-built automati
 
 ## Phase 4 Hardening Notes
 
-- `/admin/leads` is protected by HTTP Basic Auth through `proxy.ts`.
+- `/admin/leads` is protected by `proxy.ts`.
+- `/admin/leads` now has a login form backed by a signed, HttpOnly session cookie.
+- `/api/admin/*` routes are protected by the same admin session proxy.
 - Contact submissions include a hidden honeypot field, a minimum submit time, and a small server-side rate limit.
+- Cloudflare Turnstile can be enabled with `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY`.
 - Vercel Web Analytics is wired in through `@vercel/analytics`.
+- CTA and contact-form conversion events are tracked with Vercel Analytics.
 - `robots.ts` excludes `/admin/`, and `sitemap.ts` publishes the storefront, catalog, bike details, and contact page.
 - `docs/launch-checklist.md` is the current go-live verification checklist.

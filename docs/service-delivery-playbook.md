@@ -80,7 +80,9 @@ Before go-live, add the boring protections:
 
 - protect admin/operator routes
 - add basic spam controls to public forms
+- add stronger challenge protection when the client has the provider keys
 - add analytics
+- track the main conversion events
 - add sitemap and robots rules
 - run dependency audit
 - run production smoke checks

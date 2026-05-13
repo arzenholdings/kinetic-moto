@@ -10,6 +10,7 @@ type ContactRequestBody = {
   purchase_timeframe?: unknown;
   company?: unknown;
   started_at?: unknown;
+  turnstile_token?: unknown;
 };
 
 type Lead = {
@@ -43,6 +44,7 @@ const VALID_INTEREST_TYPES = new Set(["general", "book_ride", "financing", "flee
 const MIN_FORM_SECONDS = 2;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 5;
+const TURNSTILE_VERIFY_ENDPOINT = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
 const rateLimitBuckets = new Map<string, { count: number; resetAt: number }>();
 
@@ -85,6 +87,41 @@ function getClientKey(request: Request) {
   const realIp = request.headers.get("x-real-ip")?.trim();
 
   return forwardedFor || realIp || "unknown";
+}
+
+async function verifyTurnstile(token: string, request: Request) {
+  const secret = process.env.TURNSTILE_SECRET_KEY?.trim();
+
+  if (!secret) {
+    return true;
+  }
+
+  if (!token) {
+    return false;
+  }
+
+  const formData = new FormData();
+  formData.append("secret", secret);
+  formData.append("response", token);
+
+  const remoteIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+
+  if (remoteIp) {
+    formData.append("remoteip", remoteIp);
+  }
+
+  try {
+    const response = await fetch(TURNSTILE_VERIFY_ENDPOINT, {
+      method: "POST",
+      body: formData,
+    });
+    const result = (await response.json()) as { success?: boolean };
+
+    return Boolean(result.success);
+  } catch (error) {
+    console.error("Turnstile verification failed.", error);
+    return false;
+  }
 }
 
 function isRateLimited(key: string) {
@@ -336,6 +373,10 @@ export async function POST(request: Request) {
 
   if (!startedAt || Date.now() - startedAt < MIN_FORM_SECONDS * 1000) {
     return Response.json({ error: "Please wait a moment before sending your message." }, { status: 400 });
+  }
+
+  if (!(await verifyTurnstile(readString(body.turnstile_token), request))) {
+    return Response.json({ error: "Please complete the verification challenge." }, { status: 400 });
   }
 
   if (isRateLimited(getClientKey(request))) {

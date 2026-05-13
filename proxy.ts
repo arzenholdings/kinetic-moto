@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ADMIN_SESSION_COOKIE, verifyAdminSessionToken } from "@/lib/admin-auth";
 
 const ADMIN_REALM = "Kinetic Moto Admin";
 
@@ -36,6 +37,20 @@ function getCredentials(request: NextRequest) {
 }
 
 export function proxy(request: NextRequest) {
+  return handleAdminRequest(request);
+}
+
+async function handleAdminRequest(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname === "/admin/login" || pathname === "/api/admin/login") {
+    return NextResponse.next();
+  }
+
+  if (await verifyAdminSessionToken(request.cookies.get(ADMIN_SESSION_COOKIE)?.value)) {
+    return NextResponse.next();
+  }
+
   const expectedUsername = process.env.ADMIN_USERNAME;
   const expectedPassword = process.env.ADMIN_PASSWORD;
 
@@ -47,12 +62,19 @@ export function proxy(request: NextRequest) {
   const credentials = getCredentials(request);
 
   if (credentials?.username !== expectedUsername || credentials.password !== expectedPassword) {
-    return unauthorized();
+    if (pathname.startsWith("/api/admin/")) {
+      return Response.json({ error: "Authentication required." }, { status: 401 });
+    }
+
+    const loginUrl = new URL("/admin/login", request.url);
+    loginUrl.searchParams.set("next", pathname);
+
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*"],
 };

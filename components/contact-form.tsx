@@ -1,6 +1,8 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import Script from "next/script";
+import { track } from "@vercel/analytics";
 
 type LeadFormState = {
   name: string;
@@ -14,12 +16,14 @@ type LeadFormState = {
   purchase_timeframe: string;
   company: string;
   started_at: string;
+  turnstile_token: string;
 };
 
 type ContactFormProps = {
   initialBikeSlug?: string;
   initialInterestType?: string;
   initialFinancingInterest?: boolean;
+  turnstileSiteKey?: string;
 };
 
 const defaultFormState: LeadFormState = {
@@ -34,6 +38,7 @@ const defaultFormState: LeadFormState = {
   purchase_timeframe: "",
   company: "",
   started_at: "",
+  turnstile_token: "",
 };
 
 function getInitialFormState({
@@ -53,6 +58,7 @@ function getInitialFormState({
 }
 
 export function ContactForm(props: ContactFormProps) {
+  const { turnstileSiteKey } = props;
   const initialFormState = getInitialFormState(props);
   const [formState, setFormState] = useState(initialFormState);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -70,6 +76,12 @@ export function ContactForm(props: ContactFormProps) {
     setErrorMessage("");
 
     try {
+      track("contact_submit", {
+        interest_type: formState.interest_type,
+        financing_interest: formState.financing_interest,
+        has_bike: Boolean(formState.bike_slug),
+      });
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
@@ -84,9 +96,17 @@ export function ContactForm(props: ContactFormProps) {
         throw new Error(result.error || "Unable to send your message.");
       }
 
+      track("contact_success", {
+        interest_type: formState.interest_type,
+        financing_interest: formState.financing_interest,
+        has_bike: Boolean(formState.bike_slug),
+      });
       setStatus("success");
       setFormState(initialFormState);
     } catch (error) {
+      track("contact_error", {
+        interest_type: formState.interest_type,
+      });
       setStatus("error");
       setErrorMessage(error instanceof Error ? error.message : "Unable to send your message.");
     }
@@ -94,6 +114,12 @@ export function ContactForm(props: ContactFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="rounded-[2rem] border border-white/10 bg-stone-900/80 p-6 shadow-2xl shadow-black/20 backdrop-blur sm:p-8" aria-label="Contact Kinetic Moto">
+      {turnstileSiteKey ? (
+        <Script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          strategy="afterInteractive"
+        />
+      ) : null}
       <div className="grid gap-5 sm:grid-cols-2">
         <input
           type="text"
@@ -242,6 +268,22 @@ export function ContactForm(props: ContactFormProps) {
         />
       </label>
 
+      {turnstileSiteKey ? (
+        <div className="mt-5 rounded-2xl border border-stone-700 bg-stone-950 p-3">
+          <div
+            className="cf-turnstile"
+            data-sitekey={turnstileSiteKey}
+            data-theme="dark"
+            data-callback="kineticTurnstileSuccess"
+            data-expired-callback="kineticTurnstileExpired"
+          />
+          <TurnstileCallbacks
+            onSuccess={(token) => updateField("turnstile_token", token)}
+            onExpired={() => updateField("turnstile_token", "")}
+          />
+        </div>
+      ) : null}
+
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
         <button type="submit" disabled={status === "submitting"} className="rounded-full bg-orange-500 px-7 py-4 text-center text-base font-bold text-stone-950 shadow-lg shadow-orange-500/25 transition hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-900 disabled:cursor-not-allowed disabled:bg-stone-600 disabled:text-stone-300 disabled:shadow-none">
           {status === "submitting" ? "Sending..." : "Send Message"}
@@ -261,4 +303,30 @@ export function ContactForm(props: ContactFormProps) {
       </div>
     </form>
   );
+}
+
+type TurnstileCallbacksProps = {
+  onSuccess: (token: string) => void;
+  onExpired: () => void;
+};
+
+declare global {
+  interface Window {
+    kineticTurnstileSuccess?: (token: string) => void;
+    kineticTurnstileExpired?: () => void;
+  }
+}
+
+function TurnstileCallbacks({ onSuccess, onExpired }: TurnstileCallbacksProps) {
+  useEffect(() => {
+    window.kineticTurnstileSuccess = onSuccess;
+    window.kineticTurnstileExpired = onExpired;
+
+    return () => {
+      delete window.kineticTurnstileSuccess;
+      delete window.kineticTurnstileExpired;
+    };
+  }, [onExpired, onSuccess]);
+
+  return null;
 }
