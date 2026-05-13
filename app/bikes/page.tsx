@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BikeCard } from "@/components/bike-card";
-import { bikes } from "@/lib/bikes";
+import { getBikes } from "@/lib/supabase-products";
 
 export const metadata: Metadata = {
   title: "Bikes | Kinetic Moto",
   description: "Explore the Kinetic Moto electric motorcycle lineup.",
 };
 
-export default function BikesPage() {
+export default async function BikesPage() {
+  const bikes = await getBikes();
+
   return (
     <main className="min-h-screen overflow-hidden bg-stone-950 text-stone-50">
       <section className="relative isolate px-6 py-10 sm:px-8 lg:px-12" aria-labelledby="bikes-heading">

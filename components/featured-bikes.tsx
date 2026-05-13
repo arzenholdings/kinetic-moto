@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { BikeCard } from "@/components/bike-card";
-import { featuredBikes } from "@/lib/bikes";
+import { getFeaturedBikes } from "@/lib/supabase-products";
 
-export function FeaturedBikes() {
+export async function FeaturedBikes() {
+  const featuredBikes = await getFeaturedBikes();
+
   return (
     <section id="featured-bikes" className="bg-stone-950 px-6 py-20 sm:px-8 lg:px-12" aria-labelledby="featured-bikes-heading">
       <div className="mx-auto max-w-7xl">

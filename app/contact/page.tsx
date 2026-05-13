@@ -7,7 +7,20 @@ export const metadata: Metadata = {
   description: "Contact Kinetic Moto to book a ride or ask about electric motorcycles.",
 };
 
-export default function ContactPage() {
+type ContactPageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
+function getFirstParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] || "" : value || "";
+}
+
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const params = (await searchParams) || {};
+  const bikeSlug = getFirstParam(params.bike || params.bike_slug);
+  const intent = getFirstParam(params.intent || params.interest_type);
+  const financingInterest = getFirstParam(params.financing) === "true" || intent === "financing";
+
   return (
     <main className="min-h-screen overflow-hidden bg-stone-950 text-stone-50">
       <section className="relative isolate px-6 py-10 sm:px-8 lg:px-12" aria-labelledby="contact-heading">
@@ -31,7 +44,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <ContactForm />
+          <ContactForm initialBikeSlug={bikeSlug} initialInterestType={intent} initialFinancingInterest={financingInterest} />
         </div>
       </section>
     </main>

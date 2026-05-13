@@ -5,6 +5,14 @@ export type ContactLead = {
   phone: string | null;
   message: string;
   source: string;
+  bike_slug: string | null;
+  interest_type: string | null;
+  financing_interest: boolean;
+  budget_range: string | null;
+  purchase_timeframe: string | null;
+  status: string;
+  priority: string;
+  follow_up_at: string | null;
   internal_notes: string | null;
   reviewed_at: string | null;
   created_at: string;
@@ -54,6 +62,14 @@ function isContactLead(value: unknown): value is ContactLead {
     (typeof lead.phone === "string" || lead.phone === null) &&
     typeof lead.message === "string" &&
     typeof lead.source === "string" &&
+    (typeof lead.bike_slug === "string" || lead.bike_slug === null) &&
+    (typeof lead.interest_type === "string" || lead.interest_type === null) &&
+    typeof lead.financing_interest === "boolean" &&
+    (typeof lead.budget_range === "string" || lead.budget_range === null) &&
+    (typeof lead.purchase_timeframe === "string" || lead.purchase_timeframe === null) &&
+    typeof lead.status === "string" &&
+    typeof lead.priority === "string" &&
+    (typeof lead.follow_up_at === "string" || lead.follow_up_at === null) &&
     (typeof lead.internal_notes === "string" || lead.internal_notes === null) &&
     (typeof lead.reviewed_at === "string" || lead.reviewed_at === null) &&
     typeof lead.created_at === "string"
@@ -72,7 +88,10 @@ export async function getContactLeads(): Promise<LeadsResult> {
   }
 
   const endpoint = new URL(`${config.baseUrl}/rest/v1/${SUPABASE_CONTACT_LEADS_TABLE}`);
-  endpoint.searchParams.set("select", "id,name,email,phone,message,source,internal_notes,reviewed_at,created_at");
+  endpoint.searchParams.set(
+    "select",
+    "id,name,email,phone,message,source,bike_slug,interest_type,financing_interest,budget_range,purchase_timeframe,status,priority,follow_up_at,internal_notes,reviewed_at,created_at"
+  );
   endpoint.searchParams.set("order", "created_at.desc");
 
   try {
@@ -121,7 +140,13 @@ export async function getContactLeads(): Promise<LeadsResult> {
 
 export async function updateContactLead(
   id: string,
-  updates: { internal_notes?: string | null; reviewed_at?: string }
+  updates: {
+    status?: string;
+    priority?: string;
+    follow_up_at?: string | null;
+    internal_notes?: string | null;
+    reviewed_at?: string;
+  }
 ) {
   const config = getSupabaseConfig();
 

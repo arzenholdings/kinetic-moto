@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kinetic Moto
 
-## Getting Started
+Next.js 16 storefront for the Kinetic Moto electric motorcycle catalog, contact flow, Supabase lead capture, and lightweight lead review admin.
 
-First, run the development server:
+## Local Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Useful checks:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+## Environment
 
-To learn more about Next.js, take a look at the following resources:
+Copy `.env.example` to `.env.local` and fill the values that apply:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+RESEND_API_KEY=
+CONTACT_EMAIL_TO=
+CONTACT_EMAIL_FROM=
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The storefront and contact page still render when Supabase or Resend are missing. Lead storage, admin lead loading, and email delivery only run when their env vars are configured.
 
-## Deploy on Vercel
+For the current production email setup, use `CONTACT_EMAIL_TO=info@kinetic-moto.com` and `CONTACT_EMAIL_FROM=info@kinetic-moto.com`. The Resend account must keep `kinetic-moto.com` verified before production contact emails will send.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Supabase Setup
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Run these SQL files in Supabase SQL Editor:
+
+1. `docs/supabase-contact-leads.sql`
+2. `docs/supabase-products.sql`
+
+For a one-paste setup, `docs/supabase-phase3-safe-retry.sql` combines both migrations and avoids replacing existing triggers destructively.
+
+`supabase-contact-leads.sql` creates and migrates `public.contact_leads` with lead intent fields, status, priority, follow-up date, notes, and review timestamp.
+
+`supabase-products.sql` creates `public.bikes` and seeds it with the current catalog from `lib/bikes.ts`. Product loading uses Supabase when configured and falls back to the local catalog when Supabase is unavailable or returns an unexpected response.
+
+## Key Routes
+
+- `/` - storefront home with featured bikes
+- `/bikes` - full bike catalog
+- `/bikes/[slug]` - bike detail pages with contact and financing CTAs
+- `/contact` - contact, booking, and financing lead capture
+- `/admin/leads` - dense operator view for lead review and follow-up

@@ -3,6 +3,11 @@ type ContactRequestBody = {
   email?: unknown;
   phone?: unknown;
   message?: unknown;
+  bike_slug?: unknown;
+  interest_type?: unknown;
+  financing_interest?: unknown;
+  budget_range?: unknown;
+  purchase_timeframe?: unknown;
 };
 
 type Lead = {
@@ -10,6 +15,11 @@ type Lead = {
   email: string;
   phone: string;
   message: string;
+  bike_slug: string | null;
+  interest_type: string;
+  financing_interest: boolean;
+  budget_range: string | null;
+  purchase_timeframe: string | null;
 };
 
 type LoggedLead = Lead & {
@@ -25,9 +35,30 @@ type DeliveryResult =
 const RESEND_EMAIL_ENDPOINT = "https://api.resend.com/emails";
 const CONTACT_LEAD_SOURCE = "contact_form";
 const SUPABASE_CONTACT_LEADS_TABLE = "contact_leads";
+const DEFAULT_STATUS = "new";
+const HIGH_INTENT_INTERESTS = new Set(["book_ride", "financing"]);
+const VALID_INTEREST_TYPES = new Set(["general", "book_ride", "financing", "fleet", "support"]);
 
 function readString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function readNullableString(value: unknown) {
+  const text = readString(value);
+
+  return text || null;
+}
+
+function readBoolean(value: unknown) {
+  if (typeof value === "boolean") {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    return ["true", "yes", "on", "1"].includes(value.toLowerCase());
+  }
+
+  return false;
 }
 
 function isValidEmail(value: string) {
@@ -44,11 +75,18 @@ function escapeHtml(value: string) {
 }
 
 function validateLead(body: ContactRequestBody): Lead | null {
+  const interestType = readString(body.interest_type) || "general";
+
   const lead = {
     name: readString(body.name),
     email: readString(body.email),
     phone: readString(body.phone),
     message: readString(body.message),
+    bike_slug: readNullableString(body.bike_slug),
+    interest_type: VALID_INTEREST_TYPES.has(interestType) ? interestType : "general",
+    financing_interest: readBoolean(body.financing_interest),
+    budget_range: readNullableString(body.budget_range),
+    purchase_timeframe: readNullableString(body.purchase_timeframe),
   };
 
   if (!lead.name || !isValidEmail(lead.email) || !lead.message) {
@@ -76,6 +114,10 @@ function getEmailConfig() {
 
 function buildLeadEmail(lead: Lead) {
   const phone = lead.phone || "Not provided";
+  const selectedBike = lead.bike_slug || "Not provided";
+  const financingInterest = lead.financing_interest ? "Yes" : "No";
+  const budgetRange = lead.budget_range || "Not provided";
+  const purchaseTimeframe = lead.purchase_timeframe || "Not provided";
 
   return {
     subject: `New Kinetic Moto lead from ${lead.name}`,
@@ -85,6 +127,11 @@ function buildLeadEmail(lead: Lead) {
       `Name: ${lead.name}`,
       `Email: ${lead.email}`,
       `Phone: ${phone}`,
+      `Selected bike: ${selectedBike}`,
+      `Interest: ${lead.interest_type}`,
+      `Financing interest: ${financingInterest}`,
+      `Budget range: ${budgetRange}`,
+      `Purchase timeframe: ${purchaseTimeframe}`,
       "",
       "Message:",
       lead.message,
@@ -94,6 +141,11 @@ function buildLeadEmail(lead: Lead) {
       <p><strong>Name:</strong> ${escapeHtml(lead.name)}</p>
       <p><strong>Email:</strong> ${escapeHtml(lead.email)}</p>
       <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+      <p><strong>Selected bike:</strong> ${escapeHtml(selectedBike)}</p>
+      <p><strong>Interest:</strong> ${escapeHtml(lead.interest_type)}</p>
+      <p><strong>Financing interest:</strong> ${escapeHtml(financingInterest)}</p>
+      <p><strong>Budget range:</strong> ${escapeHtml(budgetRange)}</p>
+      <p><strong>Purchase timeframe:</strong> ${escapeHtml(purchaseTimeframe)}</p>
       <p><strong>Message:</strong></p>
       <p>${escapeHtml(lead.message).replace(/\n/g, "<br />")}</p>
     `,
@@ -106,9 +158,18 @@ function logLead(lead: LoggedLead) {
     email: lead.email,
     phone: lead.phone,
     message: lead.message,
+    bike_slug: lead.bike_slug,
+    interest_type: lead.interest_type,
+    financing_interest: lead.financing_interest,
+    budget_range: lead.budget_range,
+    purchase_timeframe: lead.purchase_timeframe,
     source: lead.source,
     timestamp: lead.timestamp,
   });
+}
+
+function getLeadPriority(lead: Lead) {
+  return lead.financing_interest || HIGH_INTENT_INTERESTS.has(lead.interest_type) ? "high" : "normal";
 }
 
 async function storeLeadInSupabase(lead: LoggedLead): Promise<DeliveryResult> {
@@ -137,6 +198,13 @@ async function storeLeadInSupabase(lead: LoggedLead): Promise<DeliveryResult> {
         phone: lead.phone || null,
         message: lead.message,
         source: lead.source,
+        bike_slug: lead.bike_slug,
+        interest_type: lead.interest_type,
+        financing_interest: lead.financing_interest,
+        budget_range: lead.budget_range,
+        purchase_timeframe: lead.purchase_timeframe,
+        status: DEFAULT_STATUS,
+        priority: getLeadPriority(lead),
         created_at: lead.timestamp,
       }),
     });

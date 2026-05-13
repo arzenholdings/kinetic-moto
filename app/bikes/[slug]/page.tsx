@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BikeDetailLayout } from "@/components/bike-detail-layout";
-import { bikes } from "@/lib/bikes";
+import { getBikeBySlug, getBikes } from "@/lib/supabase-products";
 
 type BikeDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -11,13 +11,15 @@ function getPriceAmount(price: string) {
   return price.replace(/[^\d.]/g, "");
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const bikes = await getBikes();
+
   return bikes.map((bike) => ({ slug: bike.slug }));
 }
 
 export async function generateMetadata({ params }: BikeDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const bike = bikes.find((item) => item.slug === slug);
+  const bike = await getBikeBySlug(slug);
 
   if (!bike) {
     return {
@@ -42,7 +44,7 @@ export async function generateMetadata({ params }: BikeDetailPageProps): Promise
 
 export default async function BikeDetailPage({ params }: BikeDetailPageProps) {
   const { slug } = await params;
-  const bike = bikes.find((item) => item.slug === slug);
+  const bike = await getBikeBySlug(slug);
 
   if (!bike) {
     notFound();
