@@ -4,6 +4,7 @@ import { getBikes } from "@/lib/supabase-products";
 const SITE_URL = "https://kinetic-moto.com";
 const staticRoutes = [
   { path: "/about", priority: 0.7 },
+  { path: "/partners", priority: 0.6 },
   { path: "/contact", priority: 0.7 },
   { path: "/policies", priority: 0.6 },
   { path: "/policies/terms", priority: 0.5 },

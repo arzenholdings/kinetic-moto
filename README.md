@@ -72,5 +72,6 @@ For repeatable launch work, see:
 - `/bikes` - launch catalog preview
 - `/bikes/[slug]` - bike detail pages with contact and financing CTAs
 - `/contact` - contact, booking, and financing lead capture
+- `/partners` - manufacturer and distributor outreach page
 - `/policies` - terms, privacy, shipping, returns, warranty, financing, and legal pages
 - `/admin/leads` - dense operator view for lead review and follow-up

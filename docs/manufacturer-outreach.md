@@ -20,6 +20,7 @@ Kinetic Moto is launching as an ecommerce-first electric motorcycle reseller wit
 Before sending applications, have these ready:
 
 - Website: `https://kinetic-moto.com`
+- Partner overview: `https://kinetic-moto.com/partners`
 - Business legal name: TBD
 - DBA: Kinetic Moto
 - Business address/service area: TBD
@@ -52,9 +53,10 @@ Subject: Dealer account inquiry for Kinetic Moto
 ```text
 Hi [Brand/Dealer Team],
 
-My name is [Name], and I’m launching Kinetic Moto, an ecommerce-first electric motorcycle reseller with local rider support, setup guidance, and a planned showroom/service presence.
+My name is [Name], and I'm launching Kinetic Moto, an ecommerce-first electric motorcycle reseller with local rider support, setup guidance, and a planned showroom/service presence.
 
 Website: https://kinetic-moto.com
+Partner overview: https://kinetic-moto.com/partners
 Contact: info@kinetic-moto.com
 Location/service area: [City, State / region]
 
@@ -97,6 +99,7 @@ I wanted to follow up on my dealer account inquiry for Kinetic Moto.
 We are preparing our launch catalog and would like to understand whether [Brand] is open to new reseller/dealer partners in [region].
 
 The site is live here: https://kinetic-moto.com
+Partner overview: https://kinetic-moto.com/partners
 
 If there is a dealer application, onboarding checklist, or wholesale contact I should use, please point me in the right direction.
 
@@ -227,4 +230,3 @@ Status:
 | TBD | Talaria | TBD verified channel | TBD | TBD | Verify source |
 | TBD | Altis | TBD US channel | TBD | TBD | Research |
 | TBD | Ventus | TBD official channel | TBD | TBD | Research |
-

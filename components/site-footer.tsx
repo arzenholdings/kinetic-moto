@@ -13,6 +13,7 @@ const policyLinks = [
 const mainLinks = [
   { label: "Bikes", href: "/bikes" },
   { label: "About", href: "/about" },
+  { label: "Dealer partners", href: "/partners" },
   { label: "Contact", href: "/contact" },
   { label: "Policies", href: "/policies" },
 ];
