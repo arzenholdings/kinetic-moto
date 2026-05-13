@@ -135,3 +135,7 @@ To safely replace the temporary concept catalog, collect:
 - shop address or service area, when ready
 - phone number and preferred contact email
 
+## Related Tracks
+
+- `docs/manufacturer-outreach.md` tracks brand/dealer account outreach and email templates.
+- `docs/merchant-support-plan.md` tracks checkout, financing, BNPL, wire/manual invoice, and merchant underwriting.

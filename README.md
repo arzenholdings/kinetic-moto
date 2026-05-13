@@ -62,6 +62,8 @@ For repeatable launch work, see:
 - `docs/launch-checklist.md` - go-live verification checklist
 - `docs/service-delivery-playbook.md` - reusable service delivery model
 - `docs/real-reseller-catalog-plan.md` - real SKU sourcing and asset policy
+- `docs/manufacturer-outreach.md` - dealer account outreach tracker and email templates
+- `docs/merchant-support-plan.md` - checkout and financing approval plan
 
 ## Key Routes
 
