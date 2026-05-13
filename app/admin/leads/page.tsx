@@ -29,6 +29,9 @@ export default async function AdminLeadsPage() {
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
+              <Link href="/admin/outreach" className="rounded-full border border-orange-400/30 bg-orange-400/10 px-5 py-3 text-center text-sm font-bold text-orange-200 transition hover:border-orange-300 hover:bg-orange-400/20 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
+                Dealer outreach
+              </Link>
               <Link href="/contact" className="rounded-full border border-orange-400/30 bg-orange-400/10 px-5 py-3 text-center text-sm font-bold text-orange-200 transition hover:border-orange-300 hover:bg-orange-400/20 focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-2 focus:ring-offset-stone-950">
                 View contact form
               </Link>

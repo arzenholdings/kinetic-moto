@@ -4,6 +4,8 @@ Goal: open legitimate dealer/reseller relationships for Kinetic Moto before list
 
 Use this as the operating tracker for outreach. Do not list a product as available until the brand or distributor confirms source, media permission, pricing, warranty path, and fulfillment terms.
 
+The protected execution view is available at `/admin/outreach`.
+
 ## Outreach Positioning
 
 Kinetic Moto is launching as an ecommerce-first electric motorcycle reseller with a local showroom/service-support path. The pitch is not "dropshipper." The pitch is:
@@ -41,7 +43,7 @@ Private application details live in `private/outreach-business-profile.md`, whic
 | Priority | Brand | Models To Ask About | Outreach Path | Source / Notes | Status |
 | --- | --- | --- | --- | --- | --- |
 | 1 | E Ride Pro | Pro SR, Pro SS 3.0, Pro Mini | Dealer application + `shop@eridepro.com` for portal activation | E Ride Pro contact page includes a US dealer application path; dealer portal guide references `shop@eridepro.com`. | Ready to apply |
-| 1 | Rawrr | Mantis X Pro, Mantis Mini | `sales@riderawrr.com` / dealer portal | Rawrr lists dealer/support positioning and a dealer portal/contact path. | Ready to email |
+| 1 | Rawrr | Mantis X Pro, Mantis Mini | Become a Dealer form / support contact | Rawrr lists a dealer application path, service expectations, and a physical commercial showroom requirement. | Pre-application draft |
 | 1 | Surron | Light Bee X, Ultra Bee | Dealer application/contact to verify official distributor | US distributor/dealer situation needs verification before listing. Treat all Surron domains carefully. | Verify source |
 | 2 | Talaria | Sting MX5, XXX Pro, Komodo | Dealer inquiry/contact form to verify official US distribution | Talaria official/distributor landscape is confusing; verify authorized source before listing. | Verify source |
 | 2 | Altis | Sigma / Sigma MX | Contact official distributor or US rep | Need US dealer channel and media permission. | Research needed |
@@ -129,6 +131,7 @@ Ask for:
 Known public paths:
 
 - `https://www.eridepro.com/contact-page`
+- `https://www.eridepro.com/dealer-signup`
 - `https://dealer.eridepro.com/pages/dealer-account-activation-guide`
 
 ### Rawrr
@@ -145,8 +148,13 @@ Ask for:
 Known public paths:
 
 - `https://www.riderawrr.com/`
+- `https://www.riderawrr.com/become-a-dealer`
 - `https://erp.rawrrdealer.com/contactus`
 - Email shown publicly: `sales@riderawrr.com`
+
+Watchout:
+
+- Rawrr's dealer page says applications need a physical commercial space with showroom capacity. Use a pre-application note first unless Ben wants to apply with the current Bellevue office and showroom-in-development plan.
 
 ### Surron
 
@@ -228,7 +236,7 @@ Status:
 | Date | Brand | Contact path | Sent by | Response | Next action |
 | --- | --- | --- | --- | --- | --- |
 | TBD | E Ride Pro | Dealer application / `shop@eridepro.com` | TBD | TBD | Submit application |
-| TBD | Rawrr | `sales@riderawrr.com` | TBD | TBD | Send intro |
+| TBD | Rawrr | Become a Dealer form / support contact | TBD | TBD | Draft pre-application note |
 | TBD | 79Bike | Dealer request form | TBD | TBD | Submit request |
 | TBD | Surron | TBD verified channel | TBD | TBD | Verify source |
 | TBD | Talaria | TBD verified channel | TBD | TBD | Verify source |

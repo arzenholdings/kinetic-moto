@@ -75,3 +75,4 @@ For repeatable launch work, see:
 - `/partners` - manufacturer and distributor outreach page
 - `/policies` - terms, privacy, shipping, returns, warranty, financing, and legal pages
 - `/admin/leads` - dense operator view for lead review and follow-up
+- `/admin/outreach` - protected dealer/manufacturer outreach execution tracker

@@ -182,4 +182,5 @@ The service should sell outcomes, not AI hype: "we make your half-built automati
 - Approved product assets should come from manufacturer/dealer portals, supplier-provided media, original Kinetic Moto photos, or licensed assets.
 - The public site now has merchant-review policy pages at `/policies/*`, an `/about` page, and footer links.
 - Manufacturer/dealer outreach now has a public partner overview at `/partners`.
+- Dealer/manufacturer execution tracking now has a protected admin view at `/admin/outreach`.
 - Public copy now frames existing catalog entries as launch previews until authorized real SKUs, photos, pricing, and specifications are approved.
