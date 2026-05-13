@@ -21,18 +21,20 @@ Before sending applications, have these ready:
 
 - Website: `https://kinetic-moto.com`
 - Partner overview: `https://kinetic-moto.com/partners`
-- Business legal name: TBD
+- Business legal name: KINETIC MOTO SPORTS LLC
 - DBA: Kinetic Moto
-- Business address/service area: TBD
-- Phone: TBD
+- Business address/service area: Bellevue, WA
+- Phone: available in private outreach profile
 - Email: `info@kinetic-moto.com`
-- EIN: TBD
-- Resale certificate/seller permit: TBD
+- EIN: available in private outreach profile; use only when an application asks
+- Resale certificate/seller permit: available in private outreach profile; attach only when requested or required
 - Business registration docs: TBD
 - Insurance/general liability: TBD
 - Owner/operator bio: TBD
-- Expected launch inventory budget: TBD
+- Expected launch inventory budget: ask each brand for opening-order requirements and whether initial reseller orders can be placed against confirmed demand
 - Service capabilities: assembly, inspection, basic mechanical setup, warranty coordination, pickup/support
+
+Private application details live in `private/outreach-business-profile.md`, which is intentionally gitignored.
 
 ## Priority Outreach List
 
@@ -53,16 +55,16 @@ Subject: Dealer account inquiry for Kinetic Moto
 ```text
 Hi [Brand/Dealer Team],
 
-My name is [Name], and I'm launching Kinetic Moto, an ecommerce-first electric motorcycle reseller with local rider support, setup guidance, and a planned showroom/service presence.
+My name is Ben Bentitou, and I'm launching Kinetic Moto, an ecommerce-first electric motorcycle reseller with local rider support, setup guidance, and a planned showroom/service presence.
 
 Website: https://kinetic-moto.com
 Partner overview: https://kinetic-moto.com/partners
 Contact: info@kinetic-moto.com
-Location/service area: [City, State / region]
+Location/service area: Bellevue, WA
 
-We are building Kinetic Moto as a brand-safe reseller for performance e-motos and electric dirt bikes. The goal is to combine online ordering with real local support: model guidance, setup questions, pickup/delivery coordination, warranty routing, and future service/support capabilities.
+We are building Kinetic Moto as a brand-safe reseller for performance e-motos and electric dirt bikes. The goal is to combine online discovery and customer consultation with real local support: model guidance, setup questions, pickup/delivery coordination, warranty routing, and future service/support capabilities.
 
-I’m reaching out to ask about becoming an authorized dealer/reseller for [Brand].
+I'm reaching out to ask about becoming an authorized dealer/reseller for [Brand].
 
 Could you send the requirements for opening a dealer account, including:
 
@@ -75,16 +77,17 @@ Could you send the requirements for opening a dealer account, including:
 - shipping, freight, and damage-claim process
 - whether online sales are allowed
 - any territory or showroom requirements
+- whether initial reseller orders can be placed against confirmed customer demand before larger inventory commitments
 
-We are preparing the launch catalog now and will only list products once we have approved assets, accurate specs, and a clear fulfillment/support path.
+We are preparing the launch catalog now and will only list products once we have approved assets, accurate specs, and a clear fulfillment/support path. We are also actively looking for commercial property for a showroom and local pickup/support presence once the model is established and producing revenue.
 
 Thanks,
 
-[Name]
+Ben Bentitou
 Kinetic Moto
 info@kinetic-moto.com
 https://kinetic-moto.com
-[Phone]
+[Phone from private outreach profile]
 ```
 
 ## Follow-Up Email
@@ -96,7 +99,7 @@ Hi [Name/Team],
 
 I wanted to follow up on my dealer account inquiry for Kinetic Moto.
 
-We are preparing our launch catalog and would like to understand whether [Brand] is open to new reseller/dealer partners in [region].
+We are preparing our launch catalog and would like to understand whether [Brand] is open to new reseller/dealer partners in Bellevue, WA.
 
 The site is live here: https://kinetic-moto.com
 Partner overview: https://kinetic-moto.com/partners
@@ -105,9 +108,10 @@ If there is a dealer application, onboarding checklist, or wholesale contact I s
 
 Thanks,
 
-[Name]
+Ben Bentitou
 Kinetic Moto
 info@kinetic-moto.com
+[Phone from private outreach profile]
 ```
 
 ## Brand-Specific Notes
@@ -230,3 +234,29 @@ Status:
 | TBD | Talaria | TBD verified channel | TBD | TBD | Verify source |
 | TBD | Altis | TBD US channel | TBD | TBD | Research |
 | TBD | Ventus | TBD official channel | TBD | TBD | Research |
+
+## OpenClaw Outlook Execution Prompt
+
+```text
+Use Outlook to create dealer/manufacturer outreach drafts for Kinetic Moto. Do not send without Ben's review.
+
+Use the public outreach template in docs/manufacturer-outreach.md and the private application details in private/outreach-business-profile.md.
+
+First wave:
+1. E Ride Pro
+2. Rawrr
+3. 79Bike
+
+Rules:
+- Verify the current official contact path or dealer application page before drafting each email.
+- Create one Outlook draft per brand.
+- Use Ben Bentitou as sender/contact.
+- Include https://kinetic-moto.com and https://kinetic-moto.com/partners.
+- Mention Bellevue, WA service area.
+- Mention that Kinetic Moto is actively looking for commercial property for a showroom/local pickup/support presence once revenue proves the model.
+- Ask for dealer application requirements, opening-order terms, MAP/wholesale pricing, media permissions, warranty process, online-sales rules, freight/damage process, and whether initial reseller orders can be placed against confirmed customer demand.
+- Do not include EIN, UBI, or the reseller permit in first-contact emails unless the form requires it.
+- If a dealer application form requires business details, use the private outreach profile.
+- If an attachment is required, use the seller permit path from the private outreach profile.
+- After drafting, create or update a Linear note/comment with brand, contact path, draft status, and recommended follow-up date five business days after send.
+```
