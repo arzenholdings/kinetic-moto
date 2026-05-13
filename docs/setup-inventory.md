@@ -173,3 +173,10 @@ The service should sell outcomes, not AI hype: "we make your half-built automati
 - The generated raster bike renders in `public/bikes/` replaced the earlier placeholder-style artwork.
 - Bike cards and the homepage hero now render catalog imagery directly.
 - Supabase `bikes.description` rows were updated through the REST API so production content matches local fallback content.
+
+## Phase 7 Reseller Pivot Notes
+
+- Kinetic Moto should be treated as a reseller/dealer storefront for real brand-name electric motorcycles.
+- Do not scrape product photos or descriptions from competitor stores.
+- Use `docs/real-reseller-catalog-plan.md` as the source of truth for replacing temporary concept bikes with real SKUs.
+- Approved product assets should come from manufacturer/dealer portals, supplier-provided media, original Kinetic Moto photos, or licensed assets.

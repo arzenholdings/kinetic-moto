@@ -61,6 +61,7 @@ For repeatable launch work, see:
 - `docs/setup-inventory.md` - current setup findings and fixes
 - `docs/launch-checklist.md` - go-live verification checklist
 - `docs/service-delivery-playbook.md` - reusable service delivery model
+- `docs/real-reseller-catalog-plan.md` - real SKU sourcing and asset policy
 
 ## Key Routes
 
