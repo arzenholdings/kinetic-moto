@@ -139,6 +139,7 @@ To safely replace the temporary concept catalog, collect:
 ## Related Tracks
 
 - `docs/manufacturer-outreach.md` tracks brand/dealer account outreach and email templates.
+- `docs/vendor-prospect-list.md` tracks the broader manufacturer/vendor universe collected from comparable e-moto retailers.
 - `docs/merchant-support-plan.md` tracks checkout, financing, BNPL, wire/manual invoice, and merchant underwriting.
 
 ## Manufacturer-Ready Site Pass

@@ -50,6 +50,8 @@ Private application details live in `private/outreach-business-profile.md`, whic
 | 2 | 79Bike | Falcon Pro, Falcon GT, Viper S | Dealer request form | 79Bike has a dealer request page. | Ready to apply |
 | 3 | Ventus | V1+ / One | Verify official US distributor/dealer path | Need official manufacturer/distributor confirmation. | Research needed |
 
+For the broader vendor universe collected from Charged Cycle Works and Emoto Superstore, see `docs/vendor-prospect-list.md`.
+
 ## Dealer Account Request Email
 
 Subject: Dealer account inquiry for Kinetic Moto
