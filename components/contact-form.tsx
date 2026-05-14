@@ -203,6 +203,7 @@ export function ContactForm(props: ContactFormProps) {
             className="mt-2 w-full rounded-2xl border border-stone-700 bg-stone-950 px-4 py-3 text-base text-white outline-none transition focus:border-orange-300 focus:ring-2 focus:ring-orange-200"
           >
             <option value="general">General question</option>
+            <option value="product_question">Product question</option>
             <option value="book_ride">Book a ride</option>
             <option value="financing">Financing</option>
             <option value="fleet">Fleet sales</option>

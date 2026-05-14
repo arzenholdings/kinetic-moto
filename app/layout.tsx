@@ -22,14 +22,14 @@ export const metadata: Metadata = {
     template: "%s | Kinetic Moto",
   },
   description:
-    "Shop brand-name electric motorcycles online with Kinetic Moto, backed by local setup, pickup, financing conversations, and rider support.",
+    "Explore Kinetic Moto's brand-name electric motorcycle launch catalog, dealer approval path, local support model, and financing conversations.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Kinetic Moto | Electric Motorcycles",
     description:
-      "Shop brand-name electric motorcycles online with Kinetic Moto, backed by local setup, pickup, financing conversations, and rider support.",
+      "Explore Kinetic Moto's brand-name electric motorcycle launch catalog, dealer approval path, local support model, and financing conversations.",
     url: "/",
     siteName: "Kinetic Moto",
     type: "website",

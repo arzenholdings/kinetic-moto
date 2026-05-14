@@ -17,7 +17,7 @@ function getFirstParam(value: string | string[] | undefined) {
 
 export default async function ContactPage({ searchParams }: ContactPageProps) {
   const params = (await searchParams) || {};
-  const bikeSlug = getFirstParam(params.bike || params.bike_slug);
+  const bikeSlug = getFirstParam(params.bike || params.bike_slug || params.brand);
   const intent = getFirstParam(params.intent || params.interest_type);
   const financingInterest = getFirstParam(params.financing) === "true" || intent === "financing";
 

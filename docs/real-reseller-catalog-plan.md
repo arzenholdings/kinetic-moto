@@ -33,13 +33,14 @@ Not approved:
 
 ## Catalog Migration Path
 
-1. Keep the current six concept bikes as temporary placeholders only.
-2. Build the real product matrix below.
-3. Pick the first 6-10 real launch SKUs.
-4. Replace `lib/bikes.ts` with real reseller products.
-5. Update Supabase product seed SQL.
-6. Add brand/category filters once there are enough SKUs.
-7. Add "visit showroom", "local pickup", "assembly", and "service support" calls to action.
+1. Stop using the current six concept bikes on primary public selling surfaces. Done.
+2. Show real target brands/models as launch candidates only. Done.
+3. Build the real product matrix below.
+4. Pick the first 6-10 approved launch SKUs after dealer authorization.
+5. Replace `lib/bikes.ts` and Supabase `bikes` rows with real reseller products.
+6. Update Supabase product seed SQL.
+7. Add brand/category filters once there are enough approved SKUs.
+8. Add "visit showroom", "local pickup", "assembly", and "service support" calls to action.
 
 ## Launch Product Matrix
 
@@ -89,8 +90,8 @@ Homepage:
 
 Catalog:
 
-- replace concept model names with real brands/models
-- add brand and category labels
+- replace concept model names with real brands/models: initial candidate pass done
+- add brand and category labels: initial candidate pass done
 - add availability labels: `In stock`, `Preorder`, `Call to confirm`
 - add "Visit showroom" and "Ask about setup" CTAs
 
@@ -139,3 +140,7 @@ To safely replace the temporary concept catalog, collect:
 
 - `docs/manufacturer-outreach.md` tracks brand/dealer account outreach and email templates.
 - `docs/merchant-support-plan.md` tracks checkout, financing, BNPL, wire/manual invoice, and merchant underwriting.
+
+## Manufacturer-Ready Site Pass
+
+The public homepage and `/bikes` now present real launch target brands as authorization candidates instead of displaying invented Kinetic Moto concept bikes as if they were products. Legacy concept-bike detail URLs redirect back to `/bikes`, and the sitemap no longer publishes those detail pages.

@@ -1,78 +1,20 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { BikeDetailLayout } from "@/components/bike-detail-layout";
-import { getBikeBySlug, getBikes } from "@/lib/supabase-products";
-
-type BikeDetailPageProps = {
-  params: Promise<{ slug: string }>;
-};
-
-function getPriceAmount(price: string) {
-  return price.replace(/[^\d.]/g, "");
-}
+import { redirect } from "next/navigation";
 
 export async function generateStaticParams() {
-  const bikes = await getBikes();
-
-  return bikes.map((bike) => ({ slug: bike.slug }));
+  return [];
 }
 
-export async function generateMetadata({ params }: BikeDetailPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const bike = await getBikeBySlug(slug);
-
-  if (!bike) {
-    return {
-      title: "Bike not found | Kinetic Moto",
-    };
-  }
-
+export function generateMetadata(): Metadata {
   return {
-    title: `${bike.name} | Kinetic Moto`,
-    description: bike.description,
+    title: "Catalog candidate",
+    description: "Kinetic Moto is replacing concept bike detail pages with authorized brand-name catalog SKUs.",
     alternates: {
-      canonical: `/bikes/${bike.slug}`,
-    },
-    openGraph: {
-      title: `${bike.name} | Kinetic Moto`,
-      description: bike.description,
-      type: "website",
-      url: `/bikes/${bike.slug}`,
+      canonical: "/bikes",
     },
   };
 }
 
-export default async function BikeDetailPage({ params }: BikeDetailPageProps) {
-  const { slug } = await params;
-  const bike = await getBikeBySlug(slug);
-
-  if (!bike) {
-    notFound();
-  }
-
-  const productJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: bike.name,
-    brand: {
-      "@type": "Brand",
-      name: "Kinetic Moto",
-    },
-    category: bike.category,
-    description: bike.description,
-    image: bike.media?.images?.[0]?.src,
-    offers: {
-      "@type": "Offer",
-      availability: "https://schema.org/PreOrder",
-      price: getPriceAmount(bike.price),
-      priceCurrency: "USD",
-    },
-  };
-
-  return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
-      <BikeDetailLayout bike={bike} />
-    </>
-  );
+export default function BikeDetailPage() {
+  redirect("/bikes");
 }

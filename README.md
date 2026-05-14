@@ -67,10 +67,10 @@ For repeatable launch work, see:
 
 ## Key Routes
 
-- `/` - storefront home with featured bikes
+- `/` - manufacturer-ready launch storefront
 - `/about` - reseller positioning and local support model
-- `/bikes` - launch catalog preview
-- `/bikes/[slug]` - bike detail pages with contact and financing CTAs
+- `/bikes` - real target-brand launch catalog in sourcing
+- `/bikes/[slug]` - redirects legacy concept-bike detail links back to `/bikes`
 - `/contact` - contact, booking, and financing lead capture
 - `/partners` - manufacturer and distributor outreach page
 - `/policies` - terms, privacy, shipping, returns, warranty, financing, and legal pages

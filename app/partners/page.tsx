@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { launchCandidates } from "@/lib/launch-catalog";
 
 export const metadata: Metadata = {
   title: "Dealer Partners",
@@ -60,6 +61,32 @@ export default function PartnersPage() {
               <p className="mt-4 leading-8 text-stone-300">{capability.body}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="bg-stone-950 px-6 pb-20 sm:px-8 lg:px-12" aria-labelledby="partner-catalog-heading">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <p className="text-sm font-black uppercase tracking-[0.28em] text-orange-300">Launch catalog plan</p>
+              <h2 id="partner-catalog-heading" className="mt-3 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl">
+                Brands are shown as candidates until approval is real.
+              </h2>
+            </div>
+            <p className="max-w-xl text-lg leading-8 text-stone-300">
+              Kinetic Moto will not use unauthorized product photography, copied descriptions, or inventory claims before a brand or distributor confirms the rules.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {launchCandidates.map((candidate) => (
+              <article key={candidate.brand} className="rounded-3xl border border-white/10 bg-white/5 p-5">
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-orange-300">{candidate.statusLabel}</p>
+                <h3 className="mt-3 text-2xl font-black text-white">{candidate.brand}</h3>
+                <p className="mt-3 text-sm leading-6 text-stone-300">{candidate.models.join(", ")}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

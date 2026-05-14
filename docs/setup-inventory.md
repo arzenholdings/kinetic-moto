@@ -184,3 +184,5 @@ The service should sell outcomes, not AI hype: "we make your half-built automati
 - Manufacturer/dealer outreach now has a public partner overview at `/partners`.
 - Dealer/manufacturer execution tracking now has a protected admin view at `/admin/outreach`.
 - Public copy now frames existing catalog entries as launch previews until authorized real SKUs, photos, pricing, and specifications are approved.
+- The primary public homepage and `/bikes` route now use real target-brand launch candidates instead of showing invented concept-bike cards.
+- Legacy concept-bike detail URLs redirect to `/bikes`, and the sitemap no longer publishes concept-bike detail pages.
