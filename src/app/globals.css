@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --kinetic-base: #05070d;
+  --kinetic-base-alt: #06070a;
+  --kinetic-surface: #090f1d;
+  --kinetic-text: #f4f7fb;
+  --kinetic-muted: #cbd5e1;
+  --kinetic-subtle: #94a3b8;
+  --kinetic-cyan: #67e8f9;
+  --kinetic-teal: #5eead4;
+  --kinetic-violet: #a78bfa;
+  --kinetic-success: #6ee7b7;
+  --kinetic-urgency: #fde68a;
+  --kinetic-error: #fda4af;
+  --background: var(--kinetic-base);
+  --foreground: var(--kinetic-text);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-kinetic-base: var(--kinetic-base);
+  --color-kinetic-base-alt: var(--kinetic-base-alt);
+  --color-kinetic-surface: var(--kinetic-surface);
+  --color-kinetic-text: var(--kinetic-text);
+  --color-kinetic-muted: var(--kinetic-muted);
+  --color-kinetic-subtle: var(--kinetic-subtle);
+  --color-kinetic-cyan: var(--kinetic-cyan);
+  --color-kinetic-teal: var(--kinetic-teal);
+  --color-kinetic-violet: var(--kinetic-violet);
+  --color-kinetic-success: var(--kinetic-success);
+  --color-kinetic-urgency: var(--kinetic-urgency);
+  --color-kinetic-error: var(--kinetic-error);
+  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(71, 255, 218, 0.32);
+  color: var(--kinetic-text);
+}
+
+a {
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--kinetic-cyan);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
