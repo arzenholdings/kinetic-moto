@@ -1,12 +1,12 @@
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://kineticmotosports.com";
+  "https://kinetic-moto.com";
 
 export const siteConfig = {
   name: "Kinetic Moto Sports",
   shortName: "Kinetic Moto",
   url: siteUrl,
-  domain: "kineticmotosports.com",
+  domain: "kinetic-moto.com",
   email: "sales@kineticmotosports.com",
   description:
     "Launch bike catalog and availability checks for Kinetic Moto Sports buyers.",
