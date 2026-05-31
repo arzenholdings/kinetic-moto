@@ -2,6 +2,8 @@
 
 import { redirect } from "next/navigation";
 
+import { insertKineticLead } from "@/lib/kinetic-leads";
+
 function readField(formData: FormData, key: string) {
   const value = formData.get(key);
   return typeof value === "string" ? value.trim() : "";
@@ -15,8 +17,49 @@ function isValidPhone(value: string) {
   return value.replace(/\D/g, "").length >= 7;
 }
 
-export async function submitKineticInquiry(formData: FormData) {
+async function sendOptionalInquiryWebhook(inquiry: {
+  name: string;
+  email: string;
+  phone: string;
+  selectedModel: string;
+  purchaseTimeframe: string;
+  financingInterest: string;
+  reserveDepositInterest: string;
+  location: string;
+  message: string;
+  intent: string;
+  submittedAt: string;
+  source: string;
+}) {
   const webhookUrl = process.env.KINETIC_INQUIRY_WEBHOOK_URL;
+
+  if (!webhookUrl) {
+    return false;
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(inquiry),
+    });
+
+    if (response.ok) {
+      return true;
+    }
+
+    console.error("Kinetic Moto optional inquiry webhook failed", {
+      status: response.status,
+      statusText: response.statusText,
+    });
+  } catch (error) {
+    console.error("Kinetic Moto optional inquiry webhook error", error);
+  }
+
+  return false;
+}
+
+export async function submitKineticInquiry(formData: FormData) {
   const inquiry = {
     name: readField(formData, "name"),
     email: readField(formData, "email"),
@@ -52,34 +95,22 @@ export async function submitKineticInquiry(formData: FormData) {
     redirect("/?inquiry=missing#inquiry");
   }
 
-  if (webhookUrl) {
-    let webhookFailed = false;
+  const supabaseResult = await insertKineticLead(inquiry);
 
-    try {
-      const response = await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(inquiry),
-      });
-
-      if (!response.ok) {
-        console.error("Kinetic Moto inquiry webhook failed", {
-          status: response.status,
-          statusText: response.statusText,
-        });
-        webhookFailed = true;
-      }
-    } catch (error) {
-      console.error("Kinetic Moto inquiry webhook error", error);
-      webhookFailed = true;
-    }
-
-    if (webhookFailed) {
-      redirect("/?inquiry=error#inquiry");
-    }
-  } else {
-    console.info("Kinetic Moto inquiry received without webhook configured", inquiry);
+  if (supabaseResult.ok) {
+    redirect("/?inquiry=sent#inquiry");
   }
 
-  redirect("/?inquiry=sent#inquiry");
+  const webhookFallbackSent = await sendOptionalInquiryWebhook(inquiry);
+
+  if (webhookFallbackSent) {
+    console.warn("Kinetic lead used optional webhook fallback because Supabase was unavailable");
+    redirect("/?inquiry=sent#inquiry");
+  }
+
+  if (!supabaseResult.configured) {
+    console.error("Kinetic lead capture is not configured. Set Supabase server env vars.");
+  }
+
+  redirect("/?inquiry=error#inquiry");
 }
