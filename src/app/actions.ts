@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 
+import { upsertHighLevelContact } from "@/lib/highlevel-contacts";
 import { insertKineticLead } from "@/lib/kinetic-leads";
 
 function readField(formData: FormData, key: string) {
@@ -98,6 +99,7 @@ export async function submitKineticInquiry(formData: FormData) {
   const supabaseResult = await insertKineticLead(inquiry);
 
   if (supabaseResult.ok) {
+    await upsertHighLevelContact(inquiry);
     redirect("/?inquiry=sent#inquiry");
   }
 
